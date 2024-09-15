@@ -1,12 +1,11 @@
 import React from "react";
 import { Tabs } from "expo-router";
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { Colors } from "@/constants/colors";
-
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Theme } from "@/constants/theme";
 
 export default function TabLayout() {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: Colors.colors.black }}>
+    <Tabs screenOptions={{ tabBarActiveTintColor: Theme.colors.blackBlue }}>
       <Tabs.Screen
         name="credentials"
         options={{
