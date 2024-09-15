@@ -1,16 +1,27 @@
-import { View, Text } from "react-native";
+import { Text } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+
 
 export default function TabLayout() {
   return (
     <Tabs screenOptions={{ tabBarActiveTintColor: "blue" }}>
       <Tabs.Screen
-        name="index"
+        name="credentials"
         options={{
           title: "Credentials",
           tabBarIcon: ({ color }) => (
-            <Text style={{ color: color }}>Creds</Text>
+            <MaterialIcons name="key" size={30} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="(alerts)/index"
+        options={{
+          title: "Alerts",
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="crisis-alert" size={30} color={color} />
           ),
         }}
       />
@@ -19,7 +30,7 @@ export default function TabLayout() {
         options={{
           title: "General",
           tabBarIcon: ({ color }) => (
-            <Text style={{ color: color }}>General</Text>
+            <MaterialIcons name="settings" size={30} color={color} />
           ),
         }}
       />
