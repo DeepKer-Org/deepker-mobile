@@ -4,24 +4,48 @@
     "slug": "deepker-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.deepkerorg.deepkermobile"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.deepkerorg.deepkermobile"
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
+    "web": {},
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./src/assets/fonts/Poppins-Black.ttf",
+            "./src/assets/fonts/Poppins-BlackItalic.ttf",
+            "./src/assets/fonts/Poppins-Bold.ttf",
+            "./src/assets/fonts/Poppins-BoldItalic.ttf",
+            "./src/assets/fonts/Poppins-ExtraBold.ttf",
+            "./src/assets/fonts/Poppins-ExtraBoldItalic.ttf",
+            "./src/assets/fonts/Poppins-ExtraLight.ttf",
+            "./src/assets/fonts/Poppins-ExtraLightItalic.ttf",
+            "./src/assets/fonts/Poppins-Italic.ttf",
+            "./src/assets/fonts/Poppins-Light.ttf",
+            "./src/assets/fonts/Poppins-LightItalic.ttf",
+            "./src/assets/fonts/Poppins-Medium.ttf",
+            "./src/assets/fonts/Poppins-MediumItalic.ttf",
+            "./src/assets/fonts/Poppins-Regular.ttf",
+            "./src/assets/fonts/Poppins-SemiBold.ttf",
+            "./src/assets/fonts/Poppins-SemiBoldItalic.ttf",
+            "./src/assets/fonts/Poppins-Thin.ttf",
+            "./src/assets/fonts/Poppins-ThinItalic.ttf"
+          ]
+        }
+      ]
+    ]
   }
 }
