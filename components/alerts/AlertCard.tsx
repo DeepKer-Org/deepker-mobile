@@ -41,7 +41,7 @@ export default AlertCard;
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    minHeight: 120, 
+    minHeight: 100, 
     paddingVertical: Theme.padding.vertical,
     paddingHorizontal: Theme.padding.horizontal,
     // Shadow for iOS
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   patientName: {
     color: Theme.colors.white,
-    fontSize: Theme.sizes.p,
+    fontSize: Theme.size.p,
     fontFamily: Theme.fonts.semibold,
     marginBottom: Theme.margin.vertical,
   },
@@ -75,13 +75,14 @@ const styles = StyleSheet.create({
   },
   label: {
     color: Theme.colors.white,
-    fontSize: Theme.sizes.h3,
+    fontSize: Theme.size.h3,
     fontFamily: Theme.fonts.semibold,
-    marginBottom: Theme.margin.vertical/2,
+    marginBottom: Theme.margin.vertical/3,
   },
   value: {
     color: Theme.colors.white,
-    fontSize: Theme.sizes.h3,
+    fontSize: Theme.size.h3,
+    fontFamily: Theme.fonts.regular
   },
   infoRight: {
     alignItems: "flex-end",

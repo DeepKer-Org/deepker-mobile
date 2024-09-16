@@ -16,14 +16,15 @@ export const Theme = {
     semibold: 'Poppins-SemiBold',
     bold: 'Poppins-Bold',
   },
-  sizes: {
+  size: {
     xl: 32,
     lg: 28,
     h1: 24,
     h2: 20,
     h3: 16,
-    h4: 14,
     p: 14,
+    sm: 12,
+    xs: 10
   },
   margin: {
     horizontal: 20,

@@ -21,7 +21,8 @@ export default function Tab() {
         <View style={styles.container}>
           <Text style={styles.h1}>Alertas Activas</Text>
           <AlertCardList patients={patients} />
-          <Text style={styles.h1}>Últimas Alertas de Hoy</Text>
+          <Text style={[styles.h1, styles.marginTop]}>Últimas Alertas de Hoy</Text>
+          <AlertCardList patients={patients} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -32,16 +33,20 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     justifyContent: "flex-start",
-    alignItems: "flex-start",
     backgroundColor: Theme.colors.whiteBlue,
   },
   container: {
+    flex: 1,
     marginHorizontal: Theme.margin.horizontal,
     marginVertical: Theme.margin.vertical,
   },
   h1: {
-    fontSize: Theme.sizes.h1,
+    fontSize: Theme.size.h1,
     fontFamily: Theme.fonts.semibold,
     color: Theme.colors.blackBlue,
+    marginBottom: Theme.margin.vertical,
   },
+  marginTop: {
+    marginTop: Theme.margin.vertical * 2.4
+  }
 });

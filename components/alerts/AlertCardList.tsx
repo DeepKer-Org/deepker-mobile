@@ -26,6 +26,6 @@ export default AlertCardList
 
 const styles = StyleSheet.create({
   container: {
-    gap: 10,
+    gap: 16,
   },
 })
