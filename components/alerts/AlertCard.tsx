@@ -1,38 +1,59 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Alert } from "@/types/alert";
 import { Theme } from "@/constants/theme";
-import { LinearGradient } from 'expo-linear-gradient';
+import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
 
 interface AlertCardProps {
+  id: Alert["id"];
   patientName: Alert["patientName"];
   type: Alert["type"];
   patientLocation: Alert["patientLocation"];
+  colorStyle: {
+    font: string;
+    lightBackground: string;
+    darkBackground: string;
+  };
 }
 
 const AlertCard: React.FC<AlertCardProps> = ({
+  id,
   patientName,
   type,
   patientLocation,
+  colorStyle,
 }) => {
+  const router = useRouter();
+
+  const handlePress = () => {
+    router.push(`/alerts/${id}`);
+  };
+
   return (
-    <View style={styles.card}>
+    <Pressable onPress={handlePress} style={styles.card}>
       <LinearGradient
-      colors={['#0A7AD6', '#0A63AC']}
-      style={styles.background}
-    ></LinearGradient>
-      <Text style={styles.patientName}>Pac. {patientName}</Text>
+        colors={[colorStyle.lightBackground, colorStyle.darkBackground]}
+        style={styles.background}
+      ></LinearGradient>
+      <Text style={[styles.patientName, { color: colorStyle.font }]}>
+        Pac. {patientName}
+      </Text>
       <View style={styles.infoContainer}>
         <View style={styles.info}>
-          <Text style={styles.label}>Diagnóstico:</Text>
-          <Text style={styles.value}>{type}</Text>
+          <Text style={[styles.label, { color: colorStyle.font }]}>
+            Diagnóstico:
+          </Text>
+          <Text style={[styles.value, { color: colorStyle.font }]}>{type}</Text>
         </View>
         <View style={[styles.info, styles.infoRight]}>
-          <Text style={styles.label}>Lugar:</Text>
-          <Text style={styles.value}>{patientLocation}</Text>
+          <Text style={[styles.label, { color: colorStyle.font }]}>Lugar:</Text>
+          <Text style={[styles.value, { color: colorStyle.font }]}>
+            {patientLocation}
+          </Text>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -41,11 +62,11 @@ export default AlertCard;
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    minHeight: 100, 
+    minHeight: 100,
     paddingVertical: Theme.padding.vertical,
     paddingHorizontal: Theme.padding.horizontal,
     // Shadow for iOS
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.4,
     // Shadow for Android
@@ -53,14 +74,13 @@ const styles = StyleSheet.create({
   },
   background: {
     borderRadius: Theme.borderRadius,
-    position: 'absolute',
+    position: "absolute",
     left: 0,
     right: 0,
     top: 0,
-    bottom: 0
+    bottom: 0,
   },
   patientName: {
-    color: Theme.colors.white,
     fontSize: Theme.size.p,
     fontFamily: Theme.fonts.semibold,
     marginBottom: Theme.margin.vertical,
@@ -71,18 +91,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   info: {
-    flexDirection: "column"
+    flexDirection: "column",
   },
   label: {
-    color: Theme.colors.white,
     fontSize: Theme.size.h3,
     fontFamily: Theme.fonts.semibold,
-    marginBottom: Theme.margin.vertical/3,
+    marginBottom: Theme.margin.vertical / 3,
   },
   value: {
-    color: Theme.colors.white,
     fontSize: Theme.size.h3,
-    fontFamily: Theme.fonts.regular
+    fontFamily: Theme.fonts.regular,
   },
   infoRight: {
     alignItems: "flex-end",

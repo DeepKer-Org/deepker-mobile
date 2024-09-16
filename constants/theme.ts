@@ -1,13 +1,16 @@
 export const Theme = {
   colors: {
-    white: '#fff',
     black: '#000',
     whiteBlue: '#F9FBFC',
-    blue: '#0A7AD6',
     blackBlue: '#003649',
     gray: '#757775',
     red: '#DA000E',
-    green: '#08AF99'
+    green: '#08AF99',
+    darkGreen: '#0B8877',
+    white: '#fff',
+    darkWhite: '#E7E7E7',
+    blue: '#0A7AD6',
+    darkBlue: '#0C5C9E'
   },
   fonts: {
     light: 'Poppins-Light',

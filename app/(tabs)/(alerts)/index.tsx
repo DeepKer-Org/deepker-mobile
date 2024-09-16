@@ -14,8 +14,12 @@ export default function Tab() {
       patientLocation: "112A",
       timestamp: "2021-09-01T12:00:00Z",
     },
-    { id: "2", patientName: "Maria Gomez", type: "Infarto", patientLocation: "120B",
-      status: "active", 
+    {
+      id: "2",
+      patientName: "Maria Gomez",
+      type: "Infarto",
+      patientLocation: "120B",
+      status: "active",
       timestamp: "2021-09-01T12:00:00Z",
     },
     {
@@ -33,7 +37,7 @@ export default function Tab() {
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.h1}>Alertas Activas</Text>
-          <AlertCardList alerts={alerts} />
+          <AlertCardList alerts={alerts} active />
           <Text style={[styles.h1, styles.marginTop]}>
             Últimas Alertas de Hoy
           </Text>

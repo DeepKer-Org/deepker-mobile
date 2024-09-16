@@ -20,6 +20,11 @@ export default function TabLayout() {
           height: Platform.OS === "ios" ? 80 : 70,
           paddingBottom: Platform.OS === "ios" ? 20 : 0,
         },
+        headerStyle: {
+          backgroundColor: Theme.colors.whiteBlue, 
+          height: Platform.OS === "ios" ? 60 : 50
+        },
+        headerTitle: () => null
       }}
     >
       <Tabs.Screen
