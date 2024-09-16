@@ -42,7 +42,7 @@ export const AlertCardList: React.FC<AlertListProps> = ({ alerts, active }) => {
             patientName={alert.patientName}
             type={alert.type}
             patientLocation={alert.patientLocation}
-            id={""}
+            id={alert.id}
             colorStyle={colorStyle}
           />
         );

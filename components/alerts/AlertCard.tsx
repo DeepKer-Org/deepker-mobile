@@ -27,7 +27,7 @@ const AlertCard: React.FC<AlertCardProps> = ({
   const router = useRouter();
 
   const handlePress = () => {
-    router.push(`/alerts/${id}`);
+    router.push(`/(alerts)/details/${id}`);
   };
 
   return (
