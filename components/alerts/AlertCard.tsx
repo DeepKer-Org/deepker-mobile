@@ -65,12 +65,13 @@ const styles = StyleSheet.create({
     minHeight: 100,
     paddingVertical: Theme.padding.vertical,
     paddingHorizontal: Theme.padding.horizontal,
+    borderRadius: Theme.borderRadius,
     // Shadow for iOS
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.4,
     // Shadow for Android
-    elevation: 5,
+    elevation: 6,
   },
   background: {
     borderRadius: Theme.borderRadius,
