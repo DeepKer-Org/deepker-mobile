@@ -1,8 +1,15 @@
+import { Biometrics } from "./biometrics";
+import { Diagnosis } from "./diagnosis";
+import { Patient } from "./patient";
+
 export interface Alert {
-    id: string;
-    patientName: string;
-    patientLocation: string;
-    type: string;
-    status: string;
+    alertId: string;
+    alertStatus: string;
+    attendedBy?: string;
+    alertTimestamp: string;
+    attendedTimestamp?: string;
     timestamp: string;
+    biometrics: Biometrics;
+    computerDiagnoses: Diagnosis[];
+    patient: Patient
 }

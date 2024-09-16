@@ -37,3 +37,7 @@ yarn-error.*
 # build
 /ios
 /android
+
+# IDE
+.idea/
+.vscode/

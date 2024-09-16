@@ -6,10 +6,11 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 
 interface AlertCardProps {
-  id: Alert["id"];
-  patientName: Alert["patientName"];
-  type: Alert["type"];
-  patientLocation: Alert["patientLocation"];
+  id: Alert["alertId"];
+  patientName: Alert["patient"]["name"];
+  principalDiagnosis: string;
+  alertStatus: Alert["alertStatus"];
+  patientLocation: Alert["patient"]["location"];
   colorStyle: {
     font: string;
     lightBackground: string;
@@ -20,14 +21,19 @@ interface AlertCardProps {
 const AlertCard: React.FC<AlertCardProps> = ({
   id,
   patientName,
-  type,
+  alertStatus,
+  principalDiagnosis,
   patientLocation,
   colorStyle,
 }) => {
   const router = useRouter();
 
   const handlePress = () => {
-    router.push(`/(alerts)/details/${id}`);
+    if (alertStatus === "unattended") {
+      router.push(`/(alerts)/details/active/${id}`);
+      return;
+    }
+    router.push(`/(alerts)/details/past/${id}`);
   };
 
   return (
@@ -44,7 +50,7 @@ const AlertCard: React.FC<AlertCardProps> = ({
           <Text style={[styles.label, { color: colorStyle.font }]}>
             Diagnóstico:
           </Text>
-          <Text style={[styles.value, { color: colorStyle.font }]}>{type}</Text>
+          <Text style={[styles.value, { color: colorStyle.font }]}>{principalDiagnosis}</Text>
         </View>
         <View style={[styles.info, styles.infoRight]}>
           <Text style={[styles.label, { color: colorStyle.font }]}>Lugar:</Text>
