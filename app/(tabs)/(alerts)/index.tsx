@@ -1,18 +1,31 @@
 import AlertCardList from "@/components/alerts/AlertCardList";
 import { Theme } from "@/constants/theme";
-import { Patient } from "@/types/patient";
+import { Alert } from "@/types/alert";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Tab() {
-  const patients: Patient[] = [
+  const alerts: Alert[] = [
     {
-      name: "Alejandro Ruiz Perez",
-      diagnosis: "Paro Cardíaco",
-      location: "112A",
+      id: "1",
+      patientName: "Alejandro Ruiz Perez",
+      status: "active",
+      type: "Paro Cardíaco",
+      patientLocation: "112A",
+      timestamp: "2021-09-01T12:00:00Z",
     },
-    { name: "Maria Gomez", diagnosis: "Infarto", location: "120B" },
-    { name: "Carlos Sanchez", diagnosis: "Arritmia", location: "101C" },
+    { id: "2", patientName: "Maria Gomez", type: "Infarto", patientLocation: "120B",
+      status: "active", 
+      timestamp: "2021-09-01T12:00:00Z",
+    },
+    {
+      id: "3",
+      patientName: "Carlos Sanchez",
+      type: "Arritmia",
+      patientLocation: "101C",
+      status: "active",
+      timestamp: "2021-09-01T12:00:00Z",
+    },
   ];
 
   return (
@@ -20,9 +33,11 @@ export default function Tab() {
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.h1}>Alertas Activas</Text>
-          <AlertCardList patients={patients} />
-          <Text style={[styles.h1, styles.marginTop]}>Últimas Alertas de Hoy</Text>
-          <AlertCardList patients={patients} />
+          <AlertCardList alerts={alerts} />
+          <Text style={[styles.h1, styles.marginTop]}>
+            Últimas Alertas de Hoy
+          </Text>
+          <AlertCardList alerts={alerts} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -47,6 +62,6 @@ const styles = StyleSheet.create({
     marginBottom: Theme.margin.vertical,
   },
   marginTop: {
-    marginTop: Theme.margin.vertical * 2.4
-  }
+    marginTop: Theme.margin.vertical * 2.4,
+  },
 });

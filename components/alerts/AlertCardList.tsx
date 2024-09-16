@@ -1,21 +1,21 @@
 import { StyleSheet, View } from 'react-native'
 import React from 'react'
-import { Patient } from '@/types/patient';
+import { Alert } from '@/types/alert';
 import AlertCard from './AlertCard';
 
-interface PatientListProps {
-  patients: Patient[];
+interface AlertListProps {
+  alerts: Alert[];
 }
 
-export const AlertCardList: React.FC<PatientListProps> = ({ patients }) => {
+export const AlertCardList: React.FC<AlertListProps> = ({ alerts }) => {
   return (
     <View style={styles.container}>
-      {patients.map((patient, index) => (
+      {alerts.map((alert, index) => (
         <AlertCard
           key={index}
-          name={patient.name}
-          diagnosis={patient.diagnosis}
-          location={patient.location}
+          patientName={alert.patientName}
+          type={alert.type}
+          patientLocation={alert.patientLocation}
         />
       ))}
     </View>

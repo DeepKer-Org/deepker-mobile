@@ -1,19 +1,19 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Patient } from "@/types/patient";
+import { Alert } from "@/types/alert";
 import { Theme } from "@/constants/theme";
 import { LinearGradient } from 'expo-linear-gradient';
 
-interface PatientCardProps {
-  name: Patient["name"];
-  diagnosis: Patient["diagnosis"];
-  location: Patient["location"];
+interface AlertCardProps {
+  patientName: Alert["patientName"];
+  type: Alert["type"];
+  patientLocation: Alert["patientLocation"];
 }
 
-const AlertCard: React.FC<PatientCardProps> = ({
-  name,
-  diagnosis,
-  location,
+const AlertCard: React.FC<AlertCardProps> = ({
+  patientName,
+  type,
+  patientLocation,
 }) => {
   return (
     <View style={styles.card}>
@@ -21,15 +21,15 @@ const AlertCard: React.FC<PatientCardProps> = ({
       colors={['#0A7AD6', '#0A63AC']}
       style={styles.background}
     ></LinearGradient>
-      <Text style={styles.patientName}>Pac. {name}</Text>
+      <Text style={styles.patientName}>Pac. {patientName}</Text>
       <View style={styles.infoContainer}>
         <View style={styles.info}>
           <Text style={styles.label}>Diagnóstico:</Text>
-          <Text style={styles.value}>{diagnosis}</Text>
+          <Text style={styles.value}>{type}</Text>
         </View>
         <View style={[styles.info, styles.infoRight]}>
           <Text style={styles.label}>Lugar:</Text>
-          <Text style={styles.value}>{location}</Text>
+          <Text style={styles.value}>{patientLocation}</Text>
         </View>
       </View>
     </View>
