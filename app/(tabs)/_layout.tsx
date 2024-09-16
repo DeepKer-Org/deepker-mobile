@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs } from "expo-router";
+import { Tabs, useSegments } from "expo-router";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Theme } from "@/constants/theme";
 import { Platform } from "react-native";
@@ -37,7 +37,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="(alerts)"
+        name="index"
         options={{
           title: "Alertas",
           tabBarIcon: ({ color }) => (

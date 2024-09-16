@@ -30,10 +30,10 @@ const AlertCard: React.FC<AlertCardProps> = ({
 
   const handlePress = () => {
     if (alertStatus === "unattended") {
-      router.push(`/(alerts)/details/active/${id}`);
+      router.navigate(`/alerts/active/${id}`);
       return;
     }
-    router.push(`/(alerts)/details/past/${id}`);
+    router.push(`/alerts/past/${id}`);
   };
 
   return (

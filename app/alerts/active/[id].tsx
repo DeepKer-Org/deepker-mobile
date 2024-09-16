@@ -1,6 +1,6 @@
 import { GestureResponderEvent, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { useLocalSearchParams } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import CustomButton from "@/components/CustomButton";
 import { Theme } from "@/constants/theme";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -10,6 +10,7 @@ import { adjustPrecision } from "@/utils/adjustPrecision";
 export default function ActiveDetails() {
   const { id } = useLocalSearchParams();
 
+  // TODO: Fetch alert from API
   const alert = {
     alertId: "1",
     patient: {
@@ -44,6 +45,17 @@ export default function ActiveDetails() {
 
   return (
     <View style={styles.background}>
+      <Stack.Screen
+        options={{
+          headerTitle: "",
+          headerTintColor: Theme.colors.blackBlue,
+          headerBackTitle: "Regresar",
+          headerBackTitleStyle: {
+            fontFamily: Theme.fonts.regular,
+            fontSize: Theme.size.h3,
+          },
+        }}
+      />
       <View style={styles.container}>
         <View>
           <View style={styles.alertHeader}>
@@ -103,12 +115,7 @@ export default function ActiveDetails() {
             primary
             text={"ATENDER"}
           />
-          <CustomButton
-            onPress={function (event: GestureResponderEvent): void {
-              throw new Error("Function not implemented.");
-            }}
-            text={"CANCELAR"}
-          />
+          <CustomButton onPress={() => router.back()} text={"CANCELAR"} />
         </View>
       </View>
     </View>
@@ -125,7 +132,10 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "space-between",
     paddingHorizontal: Theme.padding.horizontal,
-    paddingVertical: Theme.padding.vertical / 2,
+    paddingVertical:
+      Platform.OS === "ios"
+        ? Theme.padding.vertical * 1.6
+        : Theme.padding.vertical * 1.2,
   },
   buttonContainer: {
     rowGap: Theme.margin.vertical,
