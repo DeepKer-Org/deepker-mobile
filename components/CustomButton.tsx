@@ -39,6 +39,15 @@ const styles = StyleSheet.create({
   button: {
     paddingVertical: Theme.padding.vertical * 0.75,
     borderRadius: Theme.borderRadius,
+    // Shadow for iOS
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.4,
+    // Shadow for Android
+    elevation: 6,
   },
   text: {
     color: Theme.colors.white,

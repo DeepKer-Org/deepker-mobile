@@ -115,7 +115,7 @@ export default function ActiveDetails() {
             primary
             text={"ATENDER"}
           />
-          <CustomButton onPress={() => router.back()} text={"CANCELAR"} />
+          <CustomButton onPress={() => router.back()} text={"DECLINAR"} />
         </View>
       </View>
     </View>
@@ -134,11 +134,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: Theme.padding.horizontal,
     paddingVertical:
       Platform.OS === "ios"
-        ? Theme.padding.vertical * 1.6
-        : Theme.padding.vertical * 1.2,
+        ? Theme.padding.vertical * 1.5
+        : Theme.padding.vertical * 1.25,
   },
   buttonContainer: {
-    rowGap: Theme.margin.vertical,
+    rowGap: Theme.margin.vertical * 1.5,
   },
   alertHeader: {
     alignItems: "center",
