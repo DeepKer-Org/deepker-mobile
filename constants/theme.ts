@@ -30,7 +30,7 @@ export const Theme = {
     xs: 10
   },
   margin: {
-    horizontal: 20,
+    horizontal: 22,
     vertical: 10
   },
   borderRadius: 8,
