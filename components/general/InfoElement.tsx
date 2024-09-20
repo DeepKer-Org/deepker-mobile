@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   text: {
-    fontFamily: Theme.fonts.medium,
-    fontSize: Theme.size.p,
+    fontFamily: Theme.fonts.regular,
+    fontSize: Theme.size.h3,
   }
 });
