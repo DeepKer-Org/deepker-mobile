@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
   h1: {
     fontFamily: Theme.fonts.semibold,
-    color: Theme.colors.blackBlue,
+    color: Theme.colors.black,
     fontSize: Theme.size.h1,
     marginBottom: Theme.margin.vertical * 1.5
   },

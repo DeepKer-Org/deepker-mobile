@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   h1: {
     fontSize: Theme.size.h1,
     fontFamily: Theme.fonts.semibold,
-    color: Theme.colors.blackBlue,
+    color: Theme.colors.black,
     marginBottom: Theme.margin.vertical,
   },
   marginTop: {

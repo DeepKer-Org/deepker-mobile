@@ -9,7 +9,7 @@ import {
 import React from "react";
 import { Theme } from "@/constants/theme";
 
-interface CustomButtonProps {
+interface ButtonProps {
   onPress: (event: GestureResponderEvent) => void;
   text: string;
   primary?: boolean;
@@ -17,7 +17,7 @@ interface CustomButtonProps {
   textStyle?: ViewStyle;
 }
 
-const CustomButton: React.FC<CustomButtonProps> = ({
+const Button: React.FC<ButtonProps> = ({
   onPress,
   text,
   primary,
@@ -33,7 +33,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   );
 };
 
-export default CustomButton;
+export default Button;
 
 const styles = StyleSheet.create({
   button: {

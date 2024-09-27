@@ -1,7 +1,7 @@
 import { GestureResponderEvent, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { router, Stack, useLocalSearchParams } from "expo-router";
-import CustomButton from "@/components/CustomButton";
+import Button from "@/components/ui/Button";
 import { Theme } from "@/constants/theme";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Platform } from "react-native";
@@ -48,7 +48,7 @@ export default function ActiveDetails() {
       <Stack.Screen
         options={{
           headerTitle: "",
-          headerTintColor: Theme.colors.blackBlue,
+          headerTintColor: Theme.colors.black,
           headerBackTitle: "Regresar",
           headerBackTitleStyle: {
             fontFamily: Theme.fonts.regular,
@@ -108,14 +108,14 @@ export default function ActiveDetails() {
           </View>
         </View>
         <View style={styles.buttonContainer}>
-          <CustomButton
+          <Button
             onPress={function (event: GestureResponderEvent): void {
               throw new Error("Function not implemented.");
             }}
             primary
             text={"ATENDER"}
           />
-          <CustomButton onPress={() => router.back()} text={"DECLINAR"} />
+          <Button onPress={() => router.back()} text={"DECLINAR"} />
         </View>
       </View>
     </View>
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     paddingVertical: Theme.padding.vertical / 2,
   },
   infoText: {
-    color: Theme.colors.blackBlue,
+    color: Theme.colors.black,
     fontSize: Theme.size.h3,
     fontFamily: Theme.fonts.regular,
   },

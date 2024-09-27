@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     marginTop: Theme.margin.vertical / 1.5,
   },
   separator: {
-    backgroundColor: Theme.colors.blackBlue,
+    backgroundColor: Theme.colors.blue,
     height: 1,
     marginTop: Theme.margin.vertical / 1.5,
   },
