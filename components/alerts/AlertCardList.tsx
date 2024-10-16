@@ -40,11 +40,11 @@ export const AlertCardList: React.FC<AlertListProps> = ({ alerts, active }) => {
           <AlertCard
             key={index}
             patientName={alert.patient.name}
-            alertStatus={alert.alertStatus}
+            alertStatus={alert.alert_status}
             patientLocation={alert.patient.location}
-            id={alert.alertId}
+            id={alert.alert_id}
             colorStyle={colorStyle}
-            principalDiagnosis={alert.computerDiagnoses[0].name}
+            principalDiagnosis={alert.computer_diagnoses.length > 0 ? alert.computer_diagnoses[0].diagnosis : "-"}
           />
         );
       })}

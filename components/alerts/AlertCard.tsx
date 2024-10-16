@@ -8,7 +8,7 @@ import { useRouter } from "expo-router";
 interface AlertCardProps {
   id: Alert["alertId"];
   patientName: Alert["patient"]["name"];
-  principalDiagnosis: string;
+  principalDiagnosis?: string;
   alertStatus: Alert["alertStatus"];
   patientLocation: Alert["patient"]["location"];
   colorStyle: {

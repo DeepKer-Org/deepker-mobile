@@ -1,27 +1,24 @@
-import InfoElement from "@/components/general/InfoElement";
+import InfoElement from "@/components/account/InfoElement";
 import Button from "@/components/ui/Button";
 import { Theme } from "@/constants/theme";
-import { View, Text, StyleSheet, Platform } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 export default function Tab() {
   return (
     <View style={styles.background}>
       <View style={styles.container}>
         <View>
+          <Text style={styles.h1}>Cuenta</Text>
           <View style={styles.userContainer}>
-            <Text style={styles.h1}>Información General</Text>
+            <Text style={styles.h3}>Usuario</Text>
             <InfoElement label={"Nombre"} value={"Juan Carlos"} />
             <InfoElement label={"Puesto"} value={"Enfermero"} />
             <InfoElement label={"Área"} value={"Cardiología"} />
-            <InfoElement label={"Centro"} value={"Hosp. de las Esperanzas"} />
-            <InfoElement
-              label={"Horario"}
-              value={"LV 8:00 AM a 5:00 PM"}
-              lastElement
-            />
+            <InfoElement label={"Centro"} value={"Hosp. de las Esperanzas"} lastElement />
           </View>
           <View style={styles.systemContainer}>
-            <InfoElement label={"Nombre del Sistema"} value={"DeepKer"} />
+            <Text style={styles.h3}>Aplicación</Text>
+            <InfoElement label={"Nombre del Sistema"}  value={"DeepKer"} />
             <InfoElement label={"Versión"} value={"1.0.0"} lastElement />
           </View>
         </View>
@@ -55,6 +52,12 @@ const styles = StyleSheet.create({
     fontFamily: Theme.fonts.semibold,
     color: Theme.colors.black,
     fontSize: Theme.size.h1,
-    marginBottom: Theme.margin.vertical * 1.5,
+    marginBottom: Theme.margin.vertical,
   },
+  h3: {
+    fontFamily: Theme.fonts.semibold,
+    color: Theme.colors.black,
+    fontSize: Theme.size.h3,
+    marginBottom: Theme.margin.vertical,
+  }
 });

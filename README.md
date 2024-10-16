@@ -10,3 +10,12 @@ npx expo prebuild
 npx expo run:ios
 npx expo run:android
 ```
+
+
+### ENV FILE
+
+This should be a .env file in the root of the project to configure the environment variables to run on the server. By default it runs with the local environment.
+
+```bash
+EXPO_PUBLIC_API_BASE_URL=
+```
