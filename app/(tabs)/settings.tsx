@@ -22,6 +22,7 @@ export default function Tab() {
                         label="Mostrar previsualización"
                         value={isPreviewEnabled}
                         onValueChange={setIsPreviewEnabled} // Pass down the handler function
+                        lastElement
                     />
                 </View>
             </View>
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     },
     container: {
         marginHorizontal: Theme.margin.horizontal,
-        marginVertical: Theme.margin.vertical,
+        paddingVertical: Theme.padding.vertical,
         flex: 1,
     },
     alertsContainer: {
@@ -52,6 +53,7 @@ const styles = StyleSheet.create({
         fontFamily: Theme.fonts.semibold,
         color: Theme.colors.black,
         fontSize: Theme.size.h3,
-        marginBottom: Theme.margin.vertical,
+        marginTop: Theme.margin.vertical,
+        marginBottom: Theme.margin.vertical / 2,
     }
 });

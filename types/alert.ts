@@ -25,7 +25,6 @@ export interface Patient {
     location: string;
     age: number;
     sex: string;
-    final_diagnosis: string;
     doctors: string[];
     comorbidities: string[];
     medications: Medications[];
@@ -44,6 +43,7 @@ export interface Alert {
     attended_by: Doctor;
     attended_timestamp: string;
     alert_status: string;
+    final_diagnosis: string;
     biometric_data: BiometricData;
     computer_diagnoses: ComputerDiagnosis[];
     patient: Patient;

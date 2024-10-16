@@ -1,50 +1,61 @@
 import AlertCardList from "@/components/alerts/AlertCardList";
 import {Theme} from "@/constants/theme";
-import {View, Text, StyleSheet, ScrollView, ActivityIndicator} from "react-native";
+import {View, Text, StyleSheet, ScrollView, ActivityIndicator, RefreshControl} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useEffect, useState} from "react";
 import {fetchAlerts} from "@/services/alerts";
 
 export default function Tab() {
-    const [activeAlerts, setActiveAlerts] = useState([]);
-    const [pastAlerts, setPastAlerts] = useState([]);
+    const [unattendedAlerts, setUnattendedAlerts] = useState([]);
+    const [attendedAlerts, setAttendedAlerts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isRefreshing, setIsRefreshing] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        // Fetch alerts when the component mounts
-        const getAlerts = async () => {
+    const getAlerts = async (isRefresh = false) => {
+        if (!isRefresh) {
             setLoading(true);
-            setError(null);
-            try {
-                const {alerts} = await fetchAlerts();
-                const {activeAlerts, pastAlerts} = alerts.reduce(
-                    (acc, alert) => {
-                        if (alert.alert_status === "Unattended") {
-                            acc.activeAlerts.push(alert);
-                        } else {
-                            acc.pastAlerts.push(alert);
-                        }
-                        return acc;
-                    },
-                    {activeAlerts: [] as typeof alerts, pastAlerts: [] as typeof alerts}
-                );
-                setActiveAlerts(activeAlerts);
-                setPastAlerts(pastAlerts);
-            } catch (err) {
-                setError("Failed to fetch alerts");
-            } finally {
-                setLoading(false);
+        }
+        setError(null);
+        try {
+            const { alerts } = await fetchAlerts();
+            const { unattendedAlerts, attendedAlerts } = alerts.reduce(
+                (acc, alert) => {
+                    if (alert.alert_status === "Unattended") {
+                        acc.unattendedAlerts.push(alert);
+                    } else {
+                        acc.attendedAlerts.push(alert);
+                    }
+                    return acc;
+                },
+                { unattendedAlerts: [] as typeof alerts, attendedAlerts: [] as typeof alerts }
+            );
+            setUnattendedAlerts(unattendedAlerts);
+            setAttendedAlerts(attendedAlerts);
+        } catch (err) {
+            setError("Failed to fetch alerts");
+        } finally {
+            setLoading(false);
+            if (isRefresh) {
+                setIsRefreshing(false);
             }
-        };
+        }
+    };
+
+    useEffect(() => {
         getAlerts();
     }, []);
 
+    const onRefresh = () => {
+        setIsRefreshing(true);
+        getAlerts(true);
+    };
 
-    if (loading) {
+
+    if (loading && !isRefreshing) {
         return (
             <SafeAreaView style={styles.background}>
-                <ActivityIndicator size="large" color={Theme.colors.black}/>
+                <ActivityIndicator size="large" color={Theme.colors.black} />
             </SafeAreaView>
         );
     }
@@ -59,12 +70,21 @@ export default function Tab() {
 
     return (
         <SafeAreaView style={styles.background} edges={[]}>
-            <ScrollView>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        refreshing={isRefreshing}
+                        onRefresh={onRefresh}
+                        colors={[Theme.colors.black]} // Android
+                        tintColor={Theme.colors.black} // iOS
+                    />
+                }
+            >
                 <View style={styles.container}>
                     <Text style={styles.h1}>Alertas Activas</Text>
-                    <AlertCardList alerts={activeAlerts} active/>
+                    <AlertCardList alerts={unattendedAlerts} unattended/>
                     <Text style={[styles.h1, styles.marginTop]}>Últimas Alertas de Hoy</Text>
-                    <AlertCardList alerts={pastAlerts}/>
+                    <AlertCardList alerts={attendedAlerts}/>
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -80,7 +100,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginHorizontal: Theme.margin.horizontal,
-        marginVertical: Theme.margin.vertical,
+        paddingVertical: Theme.padding.vertical
     },
     h1: {
         fontSize: Theme.size.h1,

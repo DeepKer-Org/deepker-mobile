@@ -1,47 +1,68 @@
-import { GestureResponderEvent, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
+import React, {useEffect, useState} from "react";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import Button from "@/components/ui/Button";
 import { Theme } from "@/constants/theme";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Platform } from "react-native";
 import { adjustPrecision } from "@/utils/adjustPrecision";
+import {Alert, AlertMarkAttendanceRequest, AlertResponse} from "@/types/alert";
+import {fetchAlert, updateAlert} from "@/services/alerts";
 
-export default function ActiveDetails() {
-  const { id } = useLocalSearchParams();
+export default function UnattendedDetails() {
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const [alert, setAlert] = useState<Alert | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // TODO: Fetch alert from API
-  const alert = {
-    alertId: "1",
-    patient: {
-      name: "Alejandro Ruiz Perez",
-      dni: "77777777",
-      location: "112A",
-    },
-    timestamp: "2021-09-01T12:00:00Z",
-    alertStatus: "unattended",
-    alertTimestamp: "2024-09-08T12:34:56Z",
-    biometrics: {
-      O2Saturation: 88,
-      heartRate: 110,
-      systolicBloodPressure: 40,
-      diastolicBloodPressure: 90,
-    },
-    computerDiagnoses: [
-      {
-        name: "Paro cardíaco",
-        precision: 0.9,
-      },
-      {
-        name: "Arritmia aguda",
-        precision: 0.082,
-      },
-      {
-        name: "Infarto de miocardio",
-        precision: 0.011,
-      },
-    ],
-  };
+  useEffect(() => {
+    const loadAlert = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const alertData: AlertResponse = await fetchAlert(id as string);
+        setAlert(alertData.alert);
+      } catch (err) {
+        setError("Failed to fetch alert details.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadAlert();
+  }, [id]);
+
+  const handleMarkAttendance = async () => {
+    const alertMarkAttendanceRequest: AlertMarkAttendanceRequest = {
+      attended_by_id: "44556677-8888-9999-aaaa-bbbbccccdddd", // TODO: Change to the logged in user ID
+      attended_timestamp: new Date().toISOString(),
+    };
+    try {
+      await updateAlert(id, alertMarkAttendanceRequest);
+      router.back(); // Go back to the previous page (tables)
+    } catch {
+    }
+  }
+
+  if (loading) {
+    return (
+        <View style={styles.background}>
+          <ActivityIndicator size="large" color={Theme.colors.black} />
+        </View>
+    );
+  }
+
+  if (error) {
+    return (
+        <View style={styles.background}>
+          <Text style={styles.errorText}>{error}</Text>
+        </View>
+    );
+  }
+
+  if (!alert) {
+    return null; // Or render a fallback message if alert is unexpectedly null
+  }
+
 
   return (
     <View style={styles.background}>
@@ -78,16 +99,20 @@ export default function ActiveDetails() {
             <View style={styles.bulletContainer}>
               <Text style={styles.infoText}>
                 <Text style={styles.highlight}>• Frecuencia cardíaca: </Text>
-                {alert.biometrics.heartRate} ppm
+                {alert.biometric_data.heart_rate} ppm
               </Text>
               <Text style={styles.infoText}>
                 <Text style={styles.highlight}>• Presión arterial: </Text>
-                {alert.biometrics.systolicBloodPressure}/
-                {alert.biometrics.diastolicBloodPressure} mmHg
+                {alert.biometric_data.systolic_blood_pressure}/
+                {alert.biometric_data.diastolic_blood_pressure} mmHg
               </Text>
               <Text style={styles.infoText}>
                 <Text style={styles.highlight}>• Saturación de O2: </Text>
-                {alert.biometrics.O2Saturation}%
+                {alert.biometric_data.o2_saturation}%
+              </Text>
+              <Text style={styles.infoText}>
+                <Text style={styles.highlight}>• Temperatura: </Text>
+                {alert.biometric_data.temperature} °C
               </Text>
             </View>
 
@@ -97,11 +122,11 @@ export default function ActiveDetails() {
               Diagnósticos de DeepKer:
             </Text>
             <View style={styles.bulletContainer}>
-              {alert.computerDiagnoses.map((diagnosis, index) => (
+              {alert.computer_diagnoses.map((diagnosis, index) => (
                 <Text key={index} style={styles.infoText}>
                   <Text style={styles.highlight}>• </Text>
-                  <Text style={styles.highlight}>{diagnosis.name}: </Text>{" "}
-                  {adjustPrecision(diagnosis.precision)}%
+                  <Text style={styles.highlight}>{diagnosis.diagnosis}: </Text>{" "}
+                  {adjustPrecision(diagnosis.percentage)}%
                 </Text>
               ))}
             </View>
@@ -109,13 +134,11 @@ export default function ActiveDetails() {
         </View>
         <View style={styles.buttonContainer}>
           <Button
-            onPress={function (event: GestureResponderEvent): void {
-              throw new Error("Function not implemented.");
-            }}
+            onPress={handleMarkAttendance}
             primary
             text={"ATENDER"}
           />
-          <Button onPress={() => router.back()} text={"DECLINAR"} />
+          <Button onPress={() => router.back()} text={"CANCELAR"} />
         </View>
       </View>
     </View>
@@ -167,5 +190,10 @@ const styles = StyleSheet.create({
   bulletContainer: {
     marginLeft: Theme.margin.horizontal,
     rowGap: Platform.OS === "ios" ? 4 : 0,
+  },
+  errorText: {
+    color: Theme.colors.red,
+    fontSize: Theme.size.h3,
+    textAlign: "center",
   },
 });
