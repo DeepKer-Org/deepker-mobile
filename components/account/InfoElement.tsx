@@ -28,7 +28,6 @@ export default InfoElement;
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: Theme.padding.horizontal / 4,
     marginTop: Theme.margin.vertical / 1.5,
   },
   separator: {

@@ -8,7 +8,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Theme.colors.blackBlue,
+        tabBarActiveTintColor: Theme.colors.blue,
         tabBarLabelStyle: {
           fontFamily: Theme.fonts.medium,
           fontSize: Theme.size.sm,
@@ -28,11 +28,11 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="credentials"
+        name="settings"
         options={{
-          title: "Credentials",
+          title: "Ajustes",
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="key" size={30} color={color} />
+            <MaterialIcons name="settings" size={30} color={color} />
           ),
         }}
       />
@@ -46,11 +46,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="general"
+        name="account"
         options={{
-          title: "General",
+          title: "Cuenta",
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="settings" size={30} color={color} />
+            <MaterialIcons name="account-box" size={30} color={color} />
           ),
         }}
       />

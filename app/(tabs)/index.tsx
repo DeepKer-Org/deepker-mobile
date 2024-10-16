@@ -1,155 +1,120 @@
 import AlertCardList from "@/components/alerts/AlertCardList";
-import { Theme } from "@/constants/theme";
-import { Alert } from "@/types/alert";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {Theme} from "@/constants/theme";
+import {View, Text, StyleSheet, ScrollView, ActivityIndicator, RefreshControl} from "react-native";
+import {SafeAreaView} from "react-native-safe-area-context";
+import {useEffect, useState} from "react";
+import {fetchAlerts} from "@/services/alerts";
 
 export default function Tab() {
-  // TODO: Fetch alerts from API
-  const alerts: Alert[] = [
-    {
-      alertId: "1",
-      patient: {
-        name: "Alejandro Ruiz Perez",
-        dni: "77777777",
-        location: "112A",
-      },
-      timestamp: "2021-09-01T12:00:00Z",
-      alertStatus: "unattended",
-      alertTimestamp: "2024-09-08T12:34:56Z",
-      biometrics: {
-        O2Saturation: 88,
-        heartRate: 110,
-        systolicBloodPressure: 40,
-        diastolicBloodPressure: 90,
-      },
-      computerDiagnoses: [
-        {
-          name: "Paro cardíaco",
-          precision: 0.9,
-        },
-        {
-          name: "Arritmia aguda",
-          precision: 0.082,
-        },
-        {
-          name: "Infarto de miocardio",
-          precision: 0.011,
-        },
-      ],
-    },
-    {
-      alertId: "2",
-      patient: {
-        name: "Maria Garcia",
-        dni: "77777777",
-        location: "112A",
-      },
-      timestamp: "2021-09-01T12:00:00Z",
-      alertStatus: "attended",
-      alertTimestamp: "2024-09-08T12:34:56Z",
-      attendedBy: "Dr. Juan Perez",
-      attendedTimestamp: "2024-09-08T12:34:56Z",
-      biometrics: {
-        O2Saturation: 88,
-        heartRate: 110,
-        systolicBloodPressure: 40,
-        diastolicBloodPressure: 90,
-      },
-      computerDiagnoses: [
-        {
-          name: "Paro cardíaco",
-          precision: 0.9,
-        },
-        {
-          name: "Arritmia aguda",
-          precision: 0.082,
-        },
-        {
-          name: "Infarto de miocardio",
-          precision: 0.011,
-        },
-      ],
-    },
-    {
-      alertId: "3",
-      patient: {
-        name: "Juan Perez",
-        dni: "77777777",
-        location: "112A",
-      },
-      timestamp: "2021-09-01T12:00:00Z",
-      alertStatus: "attended",
-      alertTimestamp: "2024-09-08T12:34:56Z",
-      biometrics: {
-        O2Saturation: 88,
-        heartRate: 110,
-        systolicBloodPressure: 40,
-        diastolicBloodPressure: 90,
-      },
-      computerDiagnoses: [
-        {
-          name: "Paro cardíaco",
-          precision: 0.9,
-        },
-        {
-          name: "Arritmia aguda",
-          precision: 0.082,
-        },
-        {
-          name: "Infarto de miocardio",
-          precision: 0.011,
-        },
-      ],
-    },
-  ];
-  
-  const { activeAlerts, pastAlerts } = alerts.reduce(
-    (acc, alert) => {
-      if (alert.alertStatus === "unattended") {
-        acc.activeAlerts.push(alert);
-      } else {
-        acc.pastAlerts.push(alert);
-      }
-      return acc;
-    },
-    { activeAlerts: [] as typeof alerts, pastAlerts: [] as typeof alerts }
-  );
+    const [unattendedAlerts, setUnattendedAlerts] = useState([]);
+    const [attendedAlerts, setAttendedAlerts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [isRefreshing, setIsRefreshing] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-  return (
-    <SafeAreaView style={styles.background} edges={[]}>
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.h1}>Alertas Activas</Text>
-          <AlertCardList alerts={activeAlerts} active />
-          <Text style={[styles.h1, styles.marginTop]}>
-            Últimas Alertas de Hoy
-          </Text>
-          <AlertCardList alerts={pastAlerts} />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+    const getAlerts = async (isRefresh = false) => {
+        if (!isRefresh) {
+            setLoading(true);
+        }
+        setError(null);
+        try {
+            const { alerts } = await fetchAlerts();
+            const { unattendedAlerts, attendedAlerts } = alerts.reduce(
+                (acc, alert) => {
+                    if (alert.alert_status === "Unattended") {
+                        acc.unattendedAlerts.push(alert);
+                    } else {
+                        acc.attendedAlerts.push(alert);
+                    }
+                    return acc;
+                },
+                { unattendedAlerts: [] as typeof alerts, attendedAlerts: [] as typeof alerts }
+            );
+            setUnattendedAlerts(unattendedAlerts);
+            setAttendedAlerts(attendedAlerts);
+        } catch (err) {
+            setError("Failed to fetch alerts");
+        } finally {
+            setLoading(false);
+            if (isRefresh) {
+                setIsRefreshing(false);
+            }
+        }
+    };
+
+    useEffect(() => {
+        getAlerts();
+    }, []);
+
+    const onRefresh = () => {
+        setIsRefreshing(true);
+        getAlerts(true);
+    };
+
+
+    if (loading && !isRefreshing) {
+        return (
+            <SafeAreaView style={styles.background}>
+                <ActivityIndicator size="large" color={Theme.colors.black} />
+            </SafeAreaView>
+        );
+    }
+
+    if (error) {
+        return (
+            <SafeAreaView style={styles.background}>
+                <Text style={styles.errorText}>{error}</Text>
+            </SafeAreaView>
+        );
+    }
+
+    return (
+        <SafeAreaView style={styles.background} edges={[]}>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        refreshing={isRefreshing}
+                        onRefresh={onRefresh}
+                        colors={[Theme.colors.black]} // Android
+                        tintColor={Theme.colors.black} // iOS
+                    />
+                }
+            >
+                <View style={styles.container}>
+                    <Text style={styles.h1}>Alertas Activas</Text>
+                    <AlertCardList alerts={unattendedAlerts} unattended/>
+                    <Text style={[styles.h1, styles.marginTop]}>Últimas Alertas de Hoy</Text>
+                    <AlertCardList alerts={attendedAlerts}/>
+                </View>
+            </ScrollView>
+        </SafeAreaView>
+    );
 }
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    justifyContent: "flex-start",
-    backgroundColor: Theme.colors.whiteBlue,
-  },
-  container: {
-    flex: 1,
-    marginHorizontal: Theme.margin.horizontal,
-    marginVertical: Theme.margin.vertical,
-  },
-  h1: {
-    fontSize: Theme.size.h1,
-    fontFamily: Theme.fonts.semibold,
-    color: Theme.colors.black,
-    marginBottom: Theme.margin.vertical,
-  },
-  marginTop: {
-    marginTop: Theme.margin.vertical * 2.4,
-  },
+    background: {
+        flex: 1,
+        justifyContent: "flex-start",
+        backgroundColor: Theme.colors.whiteBlue,
+    },
+    container: {
+        flex: 1,
+        marginHorizontal: Theme.margin.horizontal,
+        paddingVertical: Theme.padding.vertical
+    },
+    h1: {
+        fontSize: Theme.size.h1,
+        fontFamily: Theme.fonts.semibold,
+        color: Theme.colors.black,
+        marginBottom: Theme.margin.vertical,
+    },
+    marginTop: {
+        marginTop: Theme.margin.vertical * 2.4,
+    },
+    errorText: {
+        color: Theme.colors.red,
+        fontSize: Theme.size.h2,
+        textAlign: "center",
+        marginTop: Theme.margin.vertical,
+    },
 });

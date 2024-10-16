@@ -1,15 +1,63 @@
-import { Biometrics } from "./biometrics";
-import { Diagnosis } from "./diagnosis";
-import { Patient } from "./patient";
+export interface BiometricData {
+    o2_saturation: number;
+    heart_rate: number;
+    systolic_blood_pressure: number;
+    diastolic_blood_pressure: number;
+    temperature: number;
+}
+
+export interface ComputerDiagnosis {
+    diagnosis: string;
+    percentage: number;
+}
+
+interface Medications {
+    name: string;
+    start_date: string;
+    end_date: string;
+    dosage: string;
+    periodicity: string;
+}
+
+export interface Patient {
+    dni: string;
+    name: string;
+    location: string;
+    age: number;
+    sex: string;
+    doctors: string[];
+    comorbidities: string[];
+    medications: Medications[];
+}
+
+export interface Doctor {
+    doctor_id: string;
+    dni: string;
+    name: string;
+    specialization: string;
+}
 
 export interface Alert {
-    alertId: string;
-    alertStatus: string;
-    attendedBy?: string;
-    alertTimestamp: string;
-    attendedTimestamp?: string;
-    timestamp: string;
-    biometrics: Biometrics;
-    computerDiagnoses: Diagnosis[];
-    patient: Patient
+    alert_id: string;
+    alert_timestamp: string;
+    attended_by: Doctor;
+    attended_timestamp: string;
+    alert_status: string;
+    final_diagnosis: string;
+    biometric_data: BiometricData;
+    computer_diagnoses: ComputerDiagnosis[];
+    patient: Patient;
+}
+
+export interface AlertMarkAttendanceRequest {
+    attended_by_id: string;
+    attended_timestamp: string;
+}
+
+export interface AlertResponse {
+    alert: Alert;
+}
+
+export interface AlertsResponse {
+    alerts: Alert[];
 }

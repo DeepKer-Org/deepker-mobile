@@ -5,12 +5,10 @@ import { Theme } from "@/constants/theme";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 
-interface AlertCardProps {
-  id: Alert["alertId"];
+interface AttendedAlertCardProps {
+  id: Alert["alert_id"];
   patientName: Alert["patient"]["name"];
-  principalDiagnosis: string;
-  alertStatus: Alert["alertStatus"];
-  patientLocation: Alert["patient"]["location"];
+  principalDiagnosis?: string;
   colorStyle: {
     font: string;
     lightBackground: string;
@@ -18,22 +16,16 @@ interface AlertCardProps {
   };
 }
 
-const AlertCard: React.FC<AlertCardProps> = ({
+const AttendedAlertCard: React.FC<AttendedAlertCardProps> = ({
   id,
   patientName,
-  alertStatus,
   principalDiagnosis,
-  patientLocation,
   colorStyle,
 }) => {
   const router = useRouter();
 
   const handlePress = () => {
-    if (alertStatus === "unattended") {
-      router.navigate(`/alerts/active/${id}`);
-      return;
-    }
-    router.push(`/alerts/past/${id}`);
+    router.push(`/alerts/attended/${id}`);
   };
 
   return (
@@ -52,18 +44,12 @@ const AlertCard: React.FC<AlertCardProps> = ({
           </Text>
           <Text style={[styles.value, { color: colorStyle.font }]}>{principalDiagnosis}</Text>
         </View>
-        <View style={[styles.info, styles.infoRight]}>
-          <Text style={[styles.label, { color: colorStyle.font }]}>Lugar:</Text>
-          <Text style={[styles.value, { color: colorStyle.font }]}>
-            {patientLocation}
-          </Text>
-        </View>
       </View>
     </Pressable>
   );
 };
 
-export default AlertCard;
+export default AttendedAlertCard;
 
 const styles = StyleSheet.create({
   card: {
