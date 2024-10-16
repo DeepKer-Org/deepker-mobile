@@ -100,10 +100,10 @@ export default function AttendedDetails() {
                         <View style={styles.bulletContainer}>
                             <Text style={styles.infoText}>
                                 <Text style={styles.highlight}>
-                                    • {alert.final_diagnosis !== "" ? alert.final_diagnosis : (alert.computer_diagnoses > 0 ? alert.computer_diagnoses[0].diagnosis : "En Proceso")}
+                                    • {alert.final_diagnosis !== "" ? alert.final_diagnosis : (alert.computer_diagnoses.length > 0 ? alert.computer_diagnoses[0].diagnosis : "En Proceso")}
                                 </Text>{" "}
                                 {
-                                    alert.final_diagnosis !== "" ? "confirmado por médico" : (alert.computer_diagnoses > 0 ? adjustPrecision(alert.computer_diagnoses[0].percentage) : "")
+                                    alert.final_diagnosis !== "" ? "confirmado por médico" : (alert.computer_diagnoses.length > 0 ? adjustPrecision(alert.computer_diagnoses[0].percentage) : "")
                                 }
                             </Text>
                         </View>
