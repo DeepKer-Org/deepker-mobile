@@ -1,9 +1,50 @@
 import InfoElement from "@/components/account/InfoElement";
 import Button from "@/components/ui/Button";
 import { Theme } from "@/constants/theme";
-import { View, Text, StyleSheet } from "react-native";
+import {View, Text, StyleSheet, ActivityIndicator} from "react-native";
+import {useEffect, useState} from "react";
+import {Doctor} from "@/types/doctor";
+import {fetchDoctor} from "@/services/doctors";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 export default function Tab() {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [accountData, setAccountData] = useState<Doctor | null>(null);
+
+  useEffect(() => {
+    // Fetch account data
+    const fetchAccountData = async () => {
+      setLoading(true); // Start loading
+      setError(null); // Clear any existing error before fetching
+      try {
+        const response = await fetchDoctor("44556677-8888-9999-aaaa-bbbbccccdddd");
+        setAccountData(response.doctor);
+      } catch {
+        setError("Failed to fetch account data");
+      } finally {
+        setLoading(false); // Stop loading after fetch completes
+      }
+    };
+    fetchAccountData()
+  }, []);
+
+  if (loading) {
+    return (
+        <SafeAreaView style={styles.background}>
+          <ActivityIndicator size="large" color={Theme.colors.black} />
+        </SafeAreaView>
+    );
+  }
+
+  if (error) {
+    return (
+        <SafeAreaView style={styles.background}>
+          <Text style={styles.errorText}>{error}</Text>
+        </SafeAreaView>
+    );
+  }
+
   return (
     <View style={styles.background}>
       <View style={styles.container}>
@@ -11,10 +52,9 @@ export default function Tab() {
           <Text style={styles.h1}>Cuenta</Text>
           <View style={styles.userContainer}>
             <Text style={styles.h3}>Usuario</Text>
-            <InfoElement label={"Nombre"} value={"Juan Carlos"} />
-            <InfoElement label={"Puesto"} value={"Enfermero"} />
-            <InfoElement label={"Área"} value={"Cardiología"} />
-            <InfoElement label={"Centro"} value={"Hosp. de las Esperanzas"} lastElement />
+            <InfoElement label={"Nombre"} value={accountData?.name || "N/A"} />
+            <InfoElement label={"DNI"} value={accountData?.dni || "N/A"} />
+            <InfoElement label={"Especialidad"} lastElement value={accountData?.specialization || "N/A"} />
           </View>
           <View style={styles.systemContainer}>
             <Text style={styles.h3}>Aplicación</Text>
@@ -59,5 +99,11 @@ const styles = StyleSheet.create({
     color: Theme.colors.black,
     fontSize: Theme.size.h3,
     marginBottom: Theme.margin.vertical,
-  }
+  },
+  errorText: {
+    color: Theme.colors.red,
+    fontSize: Theme.size.h2,
+    textAlign: "center",
+    marginTop: Theme.margin.vertical,
+  },
 });
