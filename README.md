@@ -27,6 +27,17 @@ EXPO_PUBLIC_API_BASE_URL=
 adb devices
 ```
 
+Retrieve the device name and run the following command to reverse the port to the device.
+
 ```bash
 adb -s device_name reverse tcp:8080 tcp:8080 
 ```
+
+### Building the application (Android only supported)
+
+```bash
+eas build --profile development --platform android  
+```
+
+
+**WARNING**: Currently compatible with feat/SCRUM-61-API-Creation-Web-Account branch of the backend repository.
