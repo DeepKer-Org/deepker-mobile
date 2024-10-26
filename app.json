@@ -1,13 +1,15 @@
 {
   "expo": {
-    "name": "deepker-mobile",
+    "name": "DeepKer",
     "slug": "deepker-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
+    "icon": "./assets/images/icon.png",
     "splash": {
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#F9FBFC"
     },
     "ios": {
       "supportsTablet": true,
@@ -15,9 +17,11 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#F9FBFC"
       },
-      "package": "com.deepkerorg.deepkermobile"
+      "package": "com.deepkerorg.deepkermobile",
+      "googleServicesFile": "./google-services.json"
     },
     "scheme": "deepker-scheme",
     "web": {},
@@ -47,7 +51,17 @@
           ]
         }
       ],
-      "expo-router"
-    ]
+      "expo-router",
+      "expo-secure-store"
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "8b0d92a5-a44e-43fe-8ae7-a3b228291095"
+      }
+    },
+    "owner": "avi2avi"
   }
 }

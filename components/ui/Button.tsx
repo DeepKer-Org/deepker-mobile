@@ -4,7 +4,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  ViewStyle,
 } from "react-native";
 import React from "react";
 import { Theme } from "@/constants/theme";
@@ -13,8 +12,6 @@ interface ButtonProps {
   onPress: (event: GestureResponderEvent) => void;
   text: string;
   primary?: boolean;
-  customStyle?: ViewStyle;
-  textStyle?: ViewStyle;
 }
 
 const Button: React.FC<ButtonProps> = ({
