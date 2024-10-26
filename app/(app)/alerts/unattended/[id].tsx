@@ -8,19 +8,21 @@ import { Platform } from "react-native";
 import { adjustPrecision } from "@/utils/adjustPrecision";
 import {Alert, AlertMarkAttendanceRequest, AlertResponse} from "@/types/alert";
 import {fetchAlert, updateAlert} from "@/services/alerts";
+import {useSession} from "@/context/AuthSessionContext";
 
 export default function UnattendedDetails() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [alert, setAlert] = useState<Alert | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const {session, doctorId} = useSession();
 
   useEffect(() => {
     const loadAlert = async () => {
       setLoading(true);
       setError(null);
       try {
-        const alertData: AlertResponse = await fetchAlert(id as string);
+        const alertData: AlertResponse = await fetchAlert(id as string, session!);
         setAlert(alertData.alert);
       } catch (err) {
         setError("Failed to fetch alert details.");
@@ -33,11 +35,11 @@ export default function UnattendedDetails() {
 
   const handleMarkAttendance = async () => {
     const alertMarkAttendanceRequest: AlertMarkAttendanceRequest = {
-      attended_by_id: "44556677-8888-9999-aaaa-bbbbccccdddd", // TODO: Change to the logged in user ID
+      attended_by_id: doctorId!,
       attended_timestamp: new Date().toISOString(),
     };
     try {
-      await updateAlert(id, alertMarkAttendanceRequest);
+      await updateAlert(id, alertMarkAttendanceRequest, session!);
       router.back(); // Go back to the previous page (tables)
     } catch {
     }

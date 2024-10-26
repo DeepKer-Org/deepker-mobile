@@ -9,19 +9,21 @@ import {datetimeFormat} from "@/utils/datetimeFormat";
 import {Alert, AlertResponse} from "@/types/alert";
 import {fetchAlert} from "@/services/alerts";
 import {adjustPrecision} from "@/utils/adjustPrecision";
+import {useSession} from "@/context/AuthSessionContext";
 
 export default function AttendedDetails() {
     const {id} = useLocalSearchParams<{ id: string }>();
     const [alert, setAlert] = useState<Alert | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const {session} = useSession();
 
     useEffect(() => {
         const loadAlert = async () => {
             setLoading(true);
             setError(null);
             try {
-                const alertData: AlertResponse = await fetchAlert(id as string);
+                const alertData: AlertResponse = await fetchAlert(id as string, session!);
                 setAlert(alertData.alert);
             } catch (err) {
                 setError("Failed to fetch alert details.");

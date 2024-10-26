@@ -1,8 +1,7 @@
-import {Stack} from 'expo-router/stack';
-import React from 'react'
 import {NotificationProvider} from "@/context/NotificationContext";
-
 import * as Notifications from 'expo-notifications';
+import {SessionProvider} from "@/context/AuthSessionContext";
+import {Slot} from "expo-router";
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -12,12 +11,12 @@ Notifications.setNotificationHandler({
     }),
 });
 
-export default function Layout() {
+export default function Root() {
     return (
         <NotificationProvider>
-            <Stack>
-                <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
-            </Stack>
+            <SessionProvider>
+                <Slot/>
+            </SessionProvider>
         </NotificationProvider>
     )
 }
