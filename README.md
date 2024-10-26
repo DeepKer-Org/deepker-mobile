@@ -38,6 +38,3 @@ adb -s device_name reverse tcp:8080 tcp:8080
 ```bash
 eas build --profile development --platform android  
 ```
-
-
-**WARNING**: Currently compatible with feat/SCRUM-61-API-Creation-Web-Account branch of the backend repository.

@@ -23,7 +23,7 @@ const Login = () => {
         }
     }
 
-    const handleRetrive = () => {
+    const handleRecover = () => {
         router.replace("recover");
     }
 
@@ -76,10 +76,10 @@ const Login = () => {
                 </View>
                 <View style={styles.recoverContainer}>
                     <Text style={styles.small}>
-                        ¿Olvidaste tu contraseña?
+                        ¿Olvidó su contraseña?
                     </Text>
-                    <Text style={styles.recoverText} onPress={handleRetrive}>
-                        Restablécela aquí.
+                    <Text style={styles.recoverText} onPress={handleRecover}>
+                        Restablézcala aquí.
                     </Text>
                 </View>
                 <AuthButton text={"INGRESAR"} onPress={handleLogin}/>

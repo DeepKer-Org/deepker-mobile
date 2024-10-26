@@ -45,5 +45,4 @@ export const changePassword = async (dni: string, issuance_date: string, new_pas
     }
 
     const data = await response.json();
-    console.log(data.message); // TODO: Remove display message as needed
 };
