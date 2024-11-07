@@ -97,7 +97,7 @@ export default function AttendedDetails() {
                         <Text
                             style={[styles.highlight, {marginTop: Theme.margin.horizontal}]}
                         >
-                            Diagnóstico Final:
+                            Diagnóstico:
                         </Text>
                         <View style={styles.bulletContainer}>
                             <Text style={styles.infoText}>
@@ -105,7 +105,7 @@ export default function AttendedDetails() {
                                     • {alert.final_diagnosis !== "" ? alert.final_diagnosis : alert.computer_diagnostic.diagnosis}
                                 </Text>{" "}
                                 {
-                                    alert.final_diagnosis !== "" ? "confirmado por médico" : adjustPrecision(alert.computer_diagnostic.percentage)
+                                    alert.final_diagnosis !== "" ? "confirmado por médico" : (adjustPrecision(alert.computer_diagnostic.percentage) + "% confirmado por DeepKer")
                                 }
                             </Text>
                         </View>

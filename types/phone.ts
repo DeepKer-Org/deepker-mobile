@@ -3,5 +3,6 @@ export interface Phone {
 }
 
 export interface PhoneResponse {
+    message: string;
     phone: Phone;
 }

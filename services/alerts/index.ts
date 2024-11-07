@@ -27,7 +27,6 @@ export const fetchAlerts = async (token: string): Promise<AlertsResponse> => {
     const data = await response.json();
     return {
         alerts: data.alerts,
-        totalCount: data.totalCount,
     };
 };
 

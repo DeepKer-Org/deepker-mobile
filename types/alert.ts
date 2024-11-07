@@ -34,12 +34,12 @@ export interface Doctor {
 }
 
 export interface Alert {
-    final_diagnosis: string;
     alert_id: string;
+    alert_status: string;
     alert_timestamp: string;
     attended_by: Doctor;
+    final_diagnosis: string;
     attended_timestamp: string;
-    alert_status: string;
     biometric_data: BiometricData;
     computer_diagnostic: ComputerDiagnostic;
     patient: Patient;
@@ -56,5 +56,4 @@ export interface AlertResponse {
 
 export interface AlertsResponse {
     alerts: Alert[];
-    totalCount: number;
 }
