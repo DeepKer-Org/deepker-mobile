@@ -40,7 +40,7 @@ export default function UnattendedDetails() {
     };
     try {
       await updateAlert(id, alertMarkAttendanceRequest, session!);
-      router.back(); // Go back to the previous page (tables)
+      router.push({ pathname: "/", params: { refresh: true } });
     } catch {
     }
   }
@@ -101,20 +101,11 @@ export default function UnattendedDetails() {
             <View style={styles.bulletContainer}>
               <Text style={styles.infoText}>
                 <Text style={styles.highlight}>• Frecuencia cardíaca: </Text>
-                {alert.biometric_data.heart_rate} ppm
-              </Text>
-              <Text style={styles.infoText}>
-                <Text style={styles.highlight}>• Presión arterial: </Text>
-                {alert.biometric_data.systolic_blood_pressure}/
-                {alert.biometric_data.diastolic_blood_pressure} mmHg
+                {alert.biometric_data.heart_rate} bpm
               </Text>
               <Text style={styles.infoText}>
                 <Text style={styles.highlight}>• Saturación de O2: </Text>
                 {alert.biometric_data.o2_saturation}%
-              </Text>
-              <Text style={styles.infoText}>
-                <Text style={styles.highlight}>• Temperatura: </Text>
-                {alert.biometric_data.temperature} °C
               </Text>
             </View>
 

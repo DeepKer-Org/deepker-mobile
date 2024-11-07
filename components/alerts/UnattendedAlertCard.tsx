@@ -20,7 +20,6 @@ interface UnattendedAlertCardProps {
 const UnattendedAlertCard: React.FC<UnattendedAlertCardProps> = ({
                                                                      id,
                                                                      patientName,
-                                                                     alertStatus,
                                                                      principalDiagnosis,
                                                                      patientLocation,
                                                                      colorStyle,
@@ -46,9 +45,6 @@ const UnattendedAlertCard: React.FC<UnattendedAlertCardProps> = ({
                         Diagnóstico:
                     </Text>
                     <Text style={[styles.value, {color: colorStyle.font}]}>{principalDiagnosis}</Text>
-                </View>
-                <View style={[styles.info, styles.infoRight]}>
-                    <Text style={[styles.label, {color: colorStyle.font}]}>Lugar:</Text>
                 </View>
                 <View style={[styles.info, styles.infoRight]}>
                     <Text style={[styles.label, {color: colorStyle.font}]}>Lugar:</Text>
