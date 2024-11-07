@@ -30,9 +30,9 @@ const Recover = () => {
         }
 
         // Password validation: at least 8 characters, one number, one special character
-        const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*_])[A-Za-z\d!@#$%^&*_]{8,}$/;
+        const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*_])[A-Za-z\d!@#$%^&*_]{12,}$/;
         if (!passwordRegex.test(password)) {
-            Alert.alert("Error en Contraseña", "La contraseña debe tener al menos 8 caracteres, un número y un carácter especial.");
+            Alert.alert("Error en Contraseña", "La contraseña debe tener al menos 12 caracteres, un número y un carácter especial.");
             return false;
         }
 

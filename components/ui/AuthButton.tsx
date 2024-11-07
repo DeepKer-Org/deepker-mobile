@@ -5,6 +5,7 @@ import {Theme} from "@/constants/theme";
 interface AuthButtonProps {
     text: string;
     onPress: () => void;
+    loading?: boolean;
 }
 
 

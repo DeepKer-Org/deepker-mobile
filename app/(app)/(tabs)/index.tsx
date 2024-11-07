@@ -5,10 +5,11 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import {useEffect, useState} from "react";
 import {fetchAlerts} from "@/services/alerts";
 import {useSession} from "@/context/AuthSessionContext";
+import {Alert} from "@/types/alert";
 
 export default function Tab() {
-    const [unattendedAlerts, setUnattendedAlerts] = useState([]);
-    const [attendedAlerts, setAttendedAlerts] = useState([]);
+    const [unattendedAlerts, setUnattendedAlerts] = useState<Alert[] | null>(null);
+    const [attendedAlerts, setAttendedAlerts] = useState<Alert[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -99,11 +100,11 @@ export default function Tab() {
             >
                 <View style={styles.container}>
                     <Text style={styles.h1}>Alertas No Atendidas</Text>
-                    {unattendedAlerts && unattendedAlerts.length === 0 ?
+                    {unattendedAlerts ?
                         <Text style={styles.p}>No se han encontrado alertas</Text> :
                         <AlertCardList alerts={unattendedAlerts} unattended/>}
                     <Text style={[styles.h1, styles.marginTop]}>Alertas Atendidas de Hoy</Text>
-                    {attendedAlerts && attendedAlerts.length === 0 ?
+                    {attendedAlerts ?
                         <Text style={styles.p}>No se han encontrado alertas</Text> :
                         <AlertCardList alerts={attendedAlerts}/>}
                 </View>

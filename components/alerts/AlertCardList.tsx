@@ -6,7 +6,7 @@ import {Theme} from "@/constants/theme";
 import UnattendedAlertCard from "@/components/alerts/UnattendedAlertCard";
 
 interface AlertListProps {
-    alerts: Alert[];
+    alerts: Alert[] | null;
     unattended?: boolean;
 }
 
@@ -31,7 +31,7 @@ const alertThemes = {
 export const AlertCardList: React.FC<AlertListProps> = ({alerts = [], unattended}) => {
     return (
         <View style={styles.container}>
-            {alerts.map((alert, index) => {
+            {alerts!.map((alert, index) => {
                 const colorStyle = unattended
                     ? alertThemes.active
                     : index % 2 === 0
@@ -45,7 +45,7 @@ export const AlertCardList: React.FC<AlertListProps> = ({alerts = [], unattended
                             patientLocation={alert.patient.location}
                             id={alert.alert_id}
                             colorStyle={colorStyle}
-                            principalDiagnosis={alert.computer_diagnoses.length > 0 ? alert.computer_diagnoses[0].diagnosis : "-"}
+                            principalDiagnosis={alert.computer_diagnostic.diagnosis}
                         />
 
                     ) : (

@@ -1,6 +1,7 @@
 // services/alertsService.ts
 import {AlertMarkAttendanceRequest, AlertResponse, AlertsResponse} from "@/types/alert";
 
+// @ts-ignore
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || "http://localhost:8080";
 
 export const fetchAlerts = async (token: string): Promise<AlertsResponse> => {

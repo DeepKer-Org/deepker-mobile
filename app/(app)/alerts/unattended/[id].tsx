@@ -40,7 +40,7 @@ export default function UnattendedDetails() {
     };
     try {
       await updateAlert(id, alertMarkAttendanceRequest, session!);
-      router.push({ pathname: "/", params: { refresh: true } });
+      router.push({ pathname: "/" });
     } catch {
     }
   }
@@ -115,13 +115,11 @@ export default function UnattendedDetails() {
               Diagnósticos de DeepKer:
             </Text>
             <View style={styles.bulletContainer}>
-              {alert.computer_diagnoses.map((diagnosis, index) => (
-                <Text key={index} style={styles.infoText}>
+                <Text style={styles.infoText}>
                   <Text style={styles.highlight}>• </Text>
-                  <Text style={styles.highlight}>{diagnosis.diagnosis}: </Text>{" "}
-                  {adjustPrecision(diagnosis.percentage)}%
+                  <Text style={styles.highlight}>{alert.computer_diagnostic.diagnosis}: </Text>{" "}
+                  {adjustPrecision(alert.computer_diagnostic.percentage)}%
                 </Text>
-              ))}
             </View>
           </View>
         </View>

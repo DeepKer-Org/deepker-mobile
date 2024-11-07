@@ -7,7 +7,7 @@ npx expo prebuild
 ### Running in emulated environment
 
 ```bash
-npx expo run:ios
+npx expo run:ios --device
 npx expo run:android
 ```
 
@@ -31,11 +31,13 @@ Retrieve the device name and run the following command to reverse the port to th
 adb -s device_name reverse tcp:8080 tcp:8080 
 ```
 
-### Building the application (Android only supported)
+## Building the application (Android only supported)
 
 ```bash
 eas build --profile development --platform android  
 ```
+
+Once this is complete, a link will be provided to download the APK file. Open and download the APK on your Android device.
 
 ### Start server in production
 
