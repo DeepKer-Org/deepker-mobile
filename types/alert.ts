@@ -1,12 +1,9 @@
 export interface BiometricData {
     o2_saturation: number;
     heart_rate: number;
-    systolic_blood_pressure: number;
-    diastolic_blood_pressure: number;
-    temperature: number;
 }
 
-export interface ComputerDiagnosis {
+export interface ComputerDiagnostic {
     diagnosis: string;
     percentage: number;
 }
@@ -37,14 +34,14 @@ export interface Doctor {
 }
 
 export interface Alert {
-    final_diagnosis: string;
     alert_id: string;
+    alert_status: string;
     alert_timestamp: string;
     attended_by: Doctor;
+    final_diagnosis: string;
     attended_timestamp: string;
-    alert_status: string;
     biometric_data: BiometricData;
-    computer_diagnoses: ComputerDiagnosis[];
+    computer_diagnostic: ComputerDiagnostic;
     patient: Patient;
 }
 
@@ -55,7 +52,6 @@ export interface AlertMarkAttendanceRequest {
 
 export interface AlertResponse {
     alert: Alert;
-    totalCount: number;
 }
 
 export interface AlertsResponse {

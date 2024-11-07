@@ -40,7 +40,7 @@ export default function UnattendedDetails() {
     };
     try {
       await updateAlert(id, alertMarkAttendanceRequest, session!);
-      router.back(); // Go back to the previous page (tables)
+      router.push({ pathname: "/" });
     } catch {
     }
   }
@@ -101,20 +101,11 @@ export default function UnattendedDetails() {
             <View style={styles.bulletContainer}>
               <Text style={styles.infoText}>
                 <Text style={styles.highlight}>• Frecuencia cardíaca: </Text>
-                {alert.biometric_data.heart_rate} ppm
-              </Text>
-              <Text style={styles.infoText}>
-                <Text style={styles.highlight}>• Presión arterial: </Text>
-                {alert.biometric_data.systolic_blood_pressure}/
-                {alert.biometric_data.diastolic_blood_pressure} mmHg
+                {alert.biometric_data.heart_rate} bpm
               </Text>
               <Text style={styles.infoText}>
                 <Text style={styles.highlight}>• Saturación de O2: </Text>
                 {alert.biometric_data.o2_saturation}%
-              </Text>
-              <Text style={styles.infoText}>
-                <Text style={styles.highlight}>• Temperatura: </Text>
-                {alert.biometric_data.temperature} °C
               </Text>
             </View>
 
@@ -124,13 +115,11 @@ export default function UnattendedDetails() {
               Diagnósticos de DeepKer:
             </Text>
             <View style={styles.bulletContainer}>
-              {alert.computer_diagnoses.map((diagnosis, index) => (
-                <Text key={index} style={styles.infoText}>
+                <Text style={styles.infoText}>
                   <Text style={styles.highlight}>• </Text>
-                  <Text style={styles.highlight}>{diagnosis.diagnosis}: </Text>{" "}
-                  {adjustPrecision(diagnosis.percentage)}%
+                  <Text style={styles.highlight}>{alert.computer_diagnostic.diagnosis}: </Text>{" "}
+                  {adjustPrecision(alert.computer_diagnostic.percentage)}%
                 </Text>
-              ))}
             </View>
           </View>
         </View>

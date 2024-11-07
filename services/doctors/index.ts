@@ -1,5 +1,6 @@
 import {DoctorResponse} from "@/types/doctor";
 
+// @ts-ignore
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || "http://localhost:8080";
 
 export const fetchDoctor = async (doctorId: string, token: string): Promise<DoctorResponse> => {
