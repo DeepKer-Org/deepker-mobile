@@ -42,7 +42,7 @@ const AttendedAlertCard: React.FC<AttendedAlertCardProps> = ({
           <Text style={[styles.label, { color: colorStyle.font }]}>
             Diagnóstico:
           </Text>
-          <Text style={[styles.value, { color: colorStyle.font }]}>{principalDiagnosis}</Text>
+          <Text style={[styles.value, { color: colorStyle.font }]}>{principalDiagnosis !== "" ? principalDiagnosis : "En proceso" }</Text>
         </View>
       </View>
     </Pressable>
