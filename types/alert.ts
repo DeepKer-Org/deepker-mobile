@@ -24,6 +24,7 @@ export interface Patient {
     sex: string;
     comorbidities: string[];
     medications: Medications[];
+    monitoring_device_id: string;
 }
 
 export interface Doctor {
