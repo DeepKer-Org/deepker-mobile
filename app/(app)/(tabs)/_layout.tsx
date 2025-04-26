@@ -11,7 +11,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: Theme.colors.blue,
         tabBarLabelStyle: {
           fontFamily: Theme.fonts.medium,
-          fontSize: Theme.size.sm,
+          fontSize: 14,
         },
         tabBarItemStyle: {
           paddingVertical: Platform.OS === "ios" ? 5 : 10,

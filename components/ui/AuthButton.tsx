@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
         color: Theme.colors.white,
         textAlign: "center",
         fontFamily: Theme.fonts.medium,
-        fontSize: Theme.size.h3,
+        fontSize: 20,
     },
 })

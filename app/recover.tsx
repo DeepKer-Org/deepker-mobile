@@ -1,4 +1,4 @@
-import { Alert, Image, Text, View } from "react-native";
+import { Alert, Image, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import IconTextInput from "@/components/ui/IconTextInput";
 import PasswordTextInput from "@/components/ui/PasswordTextInput";
@@ -13,6 +13,7 @@ import {
   validatePasswordMatch,
 } from "@/utils/validation";
 import { commonStyles } from "@/styles/commonStyles";
+import { Theme } from "@/constants/theme";
 
 const Recover = () => {
   const [dni, setDni] = useState("");
@@ -51,17 +52,17 @@ const Recover = () => {
   };
 
   return (
-    <View style={commonStyles.background}>
-      <View style={commonStyles.container}>
-        <View style={commonStyles.imageContainer}>
+    <View style={styles.background}>
+      <View style={styles.container}>
+        <View style={styles.imageContainer}>
           <Image
             source={require("../assets/images/deepker-original.webp")}
-            style={commonStyles.image}
+            style={styles.image}
           />
-          <Text style={commonStyles.logoHeader}>DeepKer</Text>
-          <Text style={commonStyles.h2}>Recuperar Contraseña</Text>
+          <Text style={styles.logoHeader}>DeepKer</Text>
+          <Text style={styles.h2}>Recuperar Contraseña</Text>
         </View>
-        <View style={commonStyles.inputs}>
+        <View style={styles.inputs}>
           <IconTextInput
             iconName="person"
             placeholder="DNI"
@@ -70,7 +71,7 @@ const Recover = () => {
             onChangeText={setDni}
           />
         </View>
-        <View style={commonStyles.inputs}>
+        <View style={styles.inputs}>
           <DateTextInput
             iconName="date-range"
             placeholder="Fecha de emisión de DNI"
@@ -78,23 +79,23 @@ const Recover = () => {
             onDateChange={setIssuanceDate}
           />
         </View>
-        <View style={commonStyles.inputs}>
+        <View style={styles.inputs}>
           <PasswordTextInput
             placeholder="Nueva contraseña"
             value={password}
             onChangeText={setPassword}
           />
         </View>
-        <View style={commonStyles.inputs}>
+        <View style={styles.inputs}>
           <PasswordTextInput
             placeholder="Confirme su contraseña"
             value={repeatPassword}
             onChangeText={setRepeatPassword}
           />
         </View>
-        <View style={commonStyles.recoverContainer}>
-          <Text style={commonStyles.small}>¿Tiene una cuenta?</Text>
-          <Text style={commonStyles.recoverText} onPress={handleLogin}>
+        <View style={styles.recoverContainer}>
+          <Text style={styles.small}>¿Tiene una cuenta?</Text>
+          <Text style={styles.recoverText} onPress={handleLogin}>
             Inicie sesión aquí.
           </Text>
         </View>
@@ -108,3 +109,12 @@ const Recover = () => {
   );
 };
 export default Recover;
+
+const styles = StyleSheet.create({
+  container: {
+     flex: 1,
+     justifyContent: "center",
+     paddingHorizontal: Theme.padding.horizontal * 2,
+   },
+   ...commonStyles
+ });

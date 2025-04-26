@@ -41,6 +41,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: Theme.fonts.regular,
-    fontSize: Theme.size.h3,
+    fontSize: 18,
   }
 });

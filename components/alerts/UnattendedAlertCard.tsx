@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         bottom: 0,
     },
     patientName: {
-        fontSize: Theme.size.p,
+        fontSize: 16,
         fontFamily: Theme.fonts.semibold,
         marginBottom: Theme.margin.vertical,
     },
@@ -95,12 +95,12 @@ const styles = StyleSheet.create({
         flexDirection: "column",
     },
     label: {
-        fontSize: Theme.size.h3,
+        fontSize: 18,
         fontFamily: Theme.fonts.semibold,
         marginBottom: Theme.margin.vertical / 3,
     },
     value: {
-        fontSize: Theme.size.h3,
+        fontSize: 18,
         fontFamily: Theme.fonts.regular,
     },
     infoRight: {

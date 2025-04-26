@@ -10,6 +10,7 @@ import {Alert, AlertResponse} from "@/types/alert";
 import {fetchAlert} from "@/services/alerts";
 import {adjustPrecision} from "@/utils/adjustPrecision";
 import {useSession} from "@/context/AuthSessionContext";
+import { commonStyles } from "@/styles/commonStyles";
 
 export default function AttendedDetails() {
     const {id} = useLocalSearchParams<{ id: string }>();
@@ -39,7 +40,7 @@ export default function AttendedDetails() {
 
     if (loading) {
         return (
-            <View style={styles.background}>
+            <View style={commonStyles.background}>
                 <ActivityIndicator size="large" color={Theme.colors.black}/>
             </View>
         );
@@ -47,7 +48,7 @@ export default function AttendedDetails() {
 
     if (error) {
         return (
-            <View style={styles.background}>
+            <View style={commonStyles.background}>
                 <Text style={styles.errorText}>{error}</Text>
             </View>
         );
@@ -59,7 +60,7 @@ export default function AttendedDetails() {
     }
 
     return (
-        <View style={styles.background}>
+        <View style={commonStyles.background}>
             <Stack.Screen
                 options={{
                     headerTitle: "",
@@ -79,28 +80,28 @@ export default function AttendedDetails() {
                             size={120}
                             color={Theme.colors.green}
                         />
-                        <Text style={styles.h1}>ALERTA RESUELTA</Text>
+                        <Text style={[styles.h1, {color: Theme.colors.green}]}>ALERTA RESUELTA</Text>
                     </View>
                     <View style={styles.infoContainer}>
-                        <Text style={styles.infoText}>
+                        <Text style={styles.p}>
                             <Text style={styles.highlight}>Paciente: </Text>
                             {alert.patient.name}
                         </Text>
-                        <Text style={styles.infoText}>
+                        <Text style={styles.p}>
                             <Text style={styles.highlight}>Fecha: </Text>
                             {alertDate}
                         </Text>
-                        <Text style={styles.infoText}>
+                        <Text style={styles.p}>
                             <Text style={styles.highlight}>Hora de Alarma: </Text>
                             {alertTime}
                         </Text>
                         <Text
-                            style={[styles.highlight, {marginTop: Theme.margin.horizontal}]}
+                            style={[styles.p, styles.highlight, {marginTop: Theme.margin.horizontal}]}
                         >
                             Diagnóstico:
                         </Text>
                         <View style={styles.bulletContainer}>
-                            <Text style={styles.infoText}>
+                            <Text style={styles.p}>
                                 <Text style={styles.highlight}>
                                     • {alert.final_diagnosis !== "" ? alert.final_diagnosis : alert.computer_diagnostic.diagnosis}
                                 </Text>{" "}
@@ -111,16 +112,16 @@ export default function AttendedDetails() {
                         </View>
 
                         <Text
-                            style={[styles.highlight, {marginTop: Theme.margin.horizontal}]}
+                            style={[styles.p, styles.highlight, {marginTop: Theme.margin.horizontal}]}
                         >
                             Atendido por:
                         </Text>
                         <View style={styles.bulletContainer}>
-                            <Text style={styles.infoText}>
+                            <Text style={styles.p}>
                                 • {alert.attended_by.name}
                             </Text>
                         </View>
-                        <Text style={[styles.infoText, {marginTop: Theme.margin.horizontal}]}>
+                        <Text style={[styles.p, {marginTop: Theme.margin.horizontal}]}>
                             <Text style={styles.highlight}>Hora de atención: </Text>
                             {attendedTime}
                         </Text>
@@ -135,10 +136,6 @@ export default function AttendedDetails() {
 }
 
 const styles = StyleSheet.create({
-    background: {
-        flex: 1,
-        backgroundColor: Theme.colors.whiteBlue,
-    },
     container: {
         flexDirection: "column",
         height: "100%",
@@ -149,40 +146,5 @@ const styles = StyleSheet.create({
                 ? Theme.padding.vertical * 1.6
                 : Theme.padding.vertical * 1.2,
     },
-    buttonContainer: {
-        rowGap: Theme.margin.vertical,
-    },
-    alertHeader: {
-        alignItems: "center",
-        justifyContent: "center",
-        paddingVertical: Theme.padding.vertical,
-    },
-    h1: {
-        fontFamily: Theme.fonts.medium,
-        color: Theme.colors.green,
-        fontSize: 32,
-    },
-    infoContainer: {
-        paddingHorizontal: Theme.padding.horizontal,
-        rowGap: Platform.OS === "ios" ? 4 : 0,
-        paddingVertical: Theme.padding.vertical / 2,
-    },
-    infoText: {
-        color: Theme.colors.black,
-        fontSize: 20,
-        fontFamily: Theme.fonts.regular,
-    },
-    highlight: {
-        fontFamily: Theme.fonts.semibold,
-        fontSize: 20,
-    },
-    bulletContainer: {
-        marginLeft: Theme.margin.horizontal,
-        rowGap: Platform.OS === "ios" ? 4 : 0,
-    },
-    errorText: {
-        color: Theme.colors.red,
-        fontSize: 20,
-        textAlign: "center",
-    },
+    ...commonStyles
 });

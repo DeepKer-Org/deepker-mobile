@@ -7,6 +7,7 @@ import {Doctor} from "@/types/doctor";
 import {fetchDoctor} from "@/services/doctors";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useSession} from "@/context/AuthSessionContext";
+import { commonStyles } from "@/styles/commonStyles";
 
 export default function Tab() {
     const [loading, setLoading] = useState(true);
@@ -60,15 +61,15 @@ export default function Tab() {
         <View style={styles.background}>
             <View style={styles.container}>
                 <View>
-                    <Text style={styles.h1}>Cuenta</Text>
+                    <Text style={styles.h2}>Cuenta</Text>
                     <View style={styles.userContainer}>
-                        <Text style={styles.h3}>Usuario</Text>
+                        <Text style={[styles.p, styles.highlight]}>Usuario</Text>
                         <InfoElement label={"Nombre"} value={accountData?.name || "N/A"}/>
                         <InfoElement label={"DNI"} value={accountData?.dni || "N/A"}/>
                         <InfoElement label={"Especialidad"} lastElement value={accountData?.specialization || "N/A"}/>
                     </View>
                     <View style={styles.systemContainer}>
-                        <Text style={styles.h3}>Aplicación</Text>
+                        <Text style={[styles.p, styles.highlight]}>Aplicación</Text>
                         <InfoElement label={"Nombre del Sistema"} value={"DeepKer"}/>
                         <InfoElement label={"Versión"} value={"1.0.0"} lastElement/>
                     </View>
@@ -82,10 +83,6 @@ export default function Tab() {
 }
 
 const styles = StyleSheet.create({
-    background: {
-        flex: 1,
-        backgroundColor: Theme.colors.whiteBlue,
-    },
     container: {
         flexDirection: "column",
         height: "100%",
@@ -99,22 +96,5 @@ const styles = StyleSheet.create({
     systemContainer: {
         marginVertical: Theme.margin.vertical * 1.5,
     },
-    h1: {
-        fontFamily: Theme.fonts.semibold,
-        color: Theme.colors.black,
-        fontSize: 24,
-        marginBottom: Theme.margin.vertical,
-    },
-    h3: {
-        fontFamily: Theme.fonts.semibold,
-        color: Theme.colors.black,
-        fontSize: 20,
-        marginBottom: Theme.margin.vertical,
-    },
-    errorText: {
-        color: Theme.colors.red,
-        fontSize: 24,
-        textAlign: "center",
-        marginTop: Theme.margin.vertical,
-    },
+    ...commonStyles
 });

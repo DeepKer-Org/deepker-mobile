@@ -1,16 +1,11 @@
 // src/styles/commonStyles.ts
-import { StyleSheet } from 'react-native';
-import { Theme } from '../constants/theme';
+import { Platform, StyleSheet } from "react-native";
+import { Theme } from "../constants/theme";
 
 export const commonStyles = StyleSheet.create({
   background: {
     flex: 1,
     backgroundColor: Theme.colors.whiteBlue,
-  },
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: Theme.padding.horizontal * 2,
   },
   logoHeader: {
     fontFamily: Theme.fonts.logo,
@@ -68,8 +63,35 @@ export const commonStyles = StyleSheet.create({
     marginTop: Theme.margin.vertical,
   },
   p: {
+    fontSize: 18,
+    fontFamily: Theme.fonts.regular,
+  },
+  grayFont: {
     color: Theme.colors.gray,
+  },
+  highlight: {
+    fontFamily: Theme.fonts.medium,
+  },
+  bulletContainer: {
+    marginLeft: Theme.margin.horizontal,
+    rowGap: Platform.OS === "ios" ? 4 : 0,
+  },
+  buttonContainer: {
+    rowGap: Theme.margin.vertical,
+  },
+  alertHeader: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: Theme.padding.vertical,
+  },
+  infoContainer: {
+    paddingHorizontal: Theme.padding.horizontal,
+    rowGap: Platform.OS === "ios" ? 4 : 0,
+    paddingVertical: Theme.padding.vertical / 2,
+  },
+  infoText: {
+    color: Theme.colors.black,
     fontSize: 20,
     fontFamily: Theme.fonts.regular,
-} 
+  },
 });

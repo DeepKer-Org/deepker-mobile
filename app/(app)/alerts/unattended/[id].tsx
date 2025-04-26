@@ -9,6 +9,7 @@ import { adjustPrecision } from "@/utils/adjustPrecision";
 import {Alert, AlertMarkAttendanceRequest, AlertResponse} from "@/types/alert";
 import {fetchAlert, updateAlert} from "@/services/alerts";
 import {useSession} from "@/context/AuthSessionContext";
+import { commonStyles } from "@/styles/commonStyles";
 
 export default function UnattendedDetails() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -87,35 +88,40 @@ export default function UnattendedDetails() {
               size={120}
               color={Theme.colors.red}
             />
-            <Text style={styles.h1}>ALERTA CRÍTICA</Text>
+            <Text style={[styles.h1, {color: Theme.colors.red}]}>ALERTA CRÍTICA</Text>
           </View>
           <View style={styles.infoContainer}>
-            <Text style={styles.infoText}>
+            <Text style={styles.p}>
               <Text style={styles.highlight}>Paciente: </Text>
               {alert.patient.name}
             </Text>
-            <Text style={styles.infoText}>
+            <Text style={styles.p}>
               <Text style={styles.highlight}>Lugar: </Text>
               {alert.patient.location}
             </Text>
+            <Text
+              style={[styles.p, styles.highlight, { marginTop: Theme.margin.horizontal }]}
+            >
+              Datos biométricos de la alerta:
+            </Text>
             <View style={styles.bulletContainer}>
-              <Text style={styles.infoText}>
+              <Text style={styles.p}>
                 <Text style={styles.highlight}>• Frecuencia cardíaca: </Text>
                 {alert.biometric_data.heart_rate} bpm
               </Text>
-              <Text style={styles.infoText}>
+              <Text style={styles.p}>
                 <Text style={styles.highlight}>• Saturación de O2: </Text>
                 {alert.biometric_data.o2_saturation}%
               </Text>
             </View>
 
             <Text
-              style={[styles.highlight, { marginTop: Theme.margin.horizontal }]}
+              style={[styles.p, styles.highlight, { marginTop: Theme.margin.horizontal }]}
             >
               Diagnósticos de DeepKer:
             </Text>
             <View style={styles.bulletContainer}>
-                <Text style={styles.infoText}>
+                <Text style={styles.p}>
                   <Text style={styles.highlight}>• </Text>
                   <Text style={styles.highlight}>{alert.computer_diagnostic.diagnosis}: </Text>{" "}
                   {adjustPrecision(alert.computer_diagnostic.percentage)}%
@@ -137,10 +143,6 @@ export default function UnattendedDetails() {
 }
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    backgroundColor: Theme.colors.whiteBlue,
-  },
   container: {
     flexDirection: "column",
     height: "100%",
@@ -151,40 +153,5 @@ const styles = StyleSheet.create({
         ? Theme.padding.vertical * 1.5
         : Theme.padding.vertical * 1.25,
   },
-  buttonContainer: {
-    rowGap: Theme.margin.vertical * 1.5,
-  },
-  alertHeader: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: Theme.padding.vertical,
-  },
-  h1: {
-    fontFamily: Theme.fonts.medium,
-    color: Theme.colors.red,
-    fontSize: 32,
-  },
-  infoContainer: {
-    paddingHorizontal: Theme.padding.horizontal,
-    rowGap: Platform.OS === "ios" ? 4 : 0,
-    paddingVertical: Theme.padding.vertical / 2,
-  },
-  infoText: {
-    color: Theme.colors.black,
-    fontSize: 20,
-    fontFamily: Theme.fonts.regular,
-  },
-  highlight: {
-    fontFamily: Theme.fonts.semibold,
-    fontSize: 20,
-  },
-  bulletContainer: {
-    marginLeft: Theme.margin.horizontal,
-    rowGap: Platform.OS === "ios" ? 4 : 0,
-  },
-  errorText: {
-    color: Theme.colors.red,
-    fontSize: 20,
-    textAlign: "center",
-  },
+  ...commonStyles
 });

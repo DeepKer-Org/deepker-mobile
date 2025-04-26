@@ -72,7 +72,7 @@ export default function Tab() {
 
     if (initialLoading) {
         return (
-            <SafeAreaView style={commonStyles.background}>
+            <SafeAreaView style={[styles.backgroundStart, styles.marginTop]}>
                 <ActivityIndicator size="large" color={Theme.colors.black}/>
             </SafeAreaView>
         );
@@ -80,7 +80,7 @@ export default function Tab() {
 
     if (error) {
         return (
-            <SafeAreaView style={commonStyles.background}>
+            <SafeAreaView style={styles.backgroundStart}>
                 <ScrollView
                     refreshControl={
                         <RefreshControl
@@ -91,14 +91,14 @@ export default function Tab() {
                         />
                     }
                 >
-                    <Text style={commonStyles.errorText}>Error: {error}</Text>
+                    <Text style={styles.errorText}>Error: {error}</Text>
                 </ScrollView>
             </SafeAreaView>
         );
     }
 
     return (
-        <SafeAreaView style={[commonStyles.background, styles.background]} edges={[]}>
+        <SafeAreaView style={styles.backgroundStart} edges={[]}>
             <ScrollView
                 refreshControl={
                     <RefreshControl
@@ -110,15 +110,15 @@ export default function Tab() {
                 }
             >
                 <View style={styles.container}>
-                    <Text style={[commonStyles.h2, styles.marginBottom]}>Alertas sin atender</Text>
+                    <Text style={[styles.h2, styles.marginBottom]}>Alertas sin atender</Text>
                     {unattendedAlerts.length === 0 ? (
-                        <Text style={commonStyles.p}>No se han encontrado alertas</Text>
+                        <Text style={styles.p}>No se han encontrado alertas</Text>
                     ) : (
                         <AlertCardList alerts={unattendedAlerts} unattended />
                     )}
-                    <Text style={[commonStyles.h2, styles.marginTop, styles.marginBottom]}>Alertas atendidas de hoy</Text>
+                    <Text style={[styles.h2, styles.marginTop, styles.marginBottom]}>Alertas atendidas de hoy</Text>
                     {attendedAlerts.length === 0 ? (
-                        <Text style={commonStyles.p}>No se han encontrado alertas</Text>
+                        <Text style={styles.p}>No se han encontrado alertas</Text>
                     ) : (
                         <AlertCardList alerts={attendedAlerts} />
                     )}
@@ -129,7 +129,7 @@ export default function Tab() {
 }
 
 const styles = StyleSheet.create({
-    background: {
+    backgroundStart: {
         flex: 1,
         justifyContent: "flex-start",
     },
@@ -144,4 +144,5 @@ const styles = StyleSheet.create({
     marginBottom: {
         marginBottom: Theme.margin.vertical,
     },
+    ...commonStyles
 });

@@ -50,6 +50,6 @@ const styles = StyleSheet.create({
     color: Theme.colors.white,
     textAlign: "center",
     fontFamily: Theme.fonts.medium,
-    fontSize: Theme.size.h2,
+    fontSize: 20,
   },
 });
