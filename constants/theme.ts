@@ -18,16 +18,7 @@ export const Theme = {
     medium: 'Poppins-Medium',
     semibold: 'Poppins-SemiBold',
     bold: 'Poppins-Bold',
-  },
-  size: {
-    xl: 32,
-    lg: 28,
-    h1: 24,
-    h2: 20,
-    h3: 16,
-    p: 14,
-    sm: 12,
-    xs: 10
+    logo: 'Merriweather-Medium'
   },
   margin: {
     horizontal: 22,

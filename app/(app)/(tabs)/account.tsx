@@ -102,18 +102,18 @@ const styles = StyleSheet.create({
     h1: {
         fontFamily: Theme.fonts.semibold,
         color: Theme.colors.black,
-        fontSize: Theme.size.h1,
+        fontSize: 24,
         marginBottom: Theme.margin.vertical,
     },
     h3: {
         fontFamily: Theme.fonts.semibold,
         color: Theme.colors.black,
-        fontSize: Theme.size.h3,
+        fontSize: 20,
         marginBottom: Theme.margin.vertical,
     },
     errorText: {
         color: Theme.colors.red,
-        fontSize: Theme.size.h2,
+        fontSize: 24,
         textAlign: "center",
         marginTop: Theme.margin.vertical,
     },

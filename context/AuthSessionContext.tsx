@@ -5,9 +5,9 @@ import {loginUser, changePassword as changePasswordService } from "@/services/au
 import {fetchDoctorByUserId} from "@/services/doctors";
 
 type AuthContextType = {
-    signIn: (username: string, password: string) => Promise<void>;
+    signIn: (username: string, password: string, onError: (error: string) => void) => Promise<void>;
     signOut: () => Promise<void>;
-    changePassword: (dni: string, issuance_date: string, new_password: string) => Promise<void>;
+    changePassword: (dni: string, issuance_date: string, new_password: string, onError: (error: string) => void) => Promise<void>;
     session?: string | null;
     uid?: string | null;
     doctorId?: string | null;
@@ -44,7 +44,7 @@ export function SessionProvider(props: React.PropsWithChildren) {
         return decodedPayload;
     };
 
-    const signIn = async (username: string, password: string) => {
+    const signIn = async (username: string, password: string, onError: (error: string) => void) => {
         try {
             // Authenticate and get token
             const { token } = await loginUser(username, password);
@@ -66,6 +66,7 @@ export function SessionProvider(props: React.PropsWithChildren) {
             setSession(null);
             setUid(null);
             setDoctorId(null);
+            onError(error as string);
         }
     };
 
@@ -80,11 +81,11 @@ export function SessionProvider(props: React.PropsWithChildren) {
         }
     };
 
-    const changePassword = async (dni: string, issuance_date: string, new_password: string) => {
+    const changePassword = async (dni: string, issuance_date: string, new_password: string, onError: (error: string) => void) => {
         try {
             await changePasswordService(dni, issuance_date, new_password);
         } catch (error) {
-            console.error("Password change error", error);
+            onError(error as string);
         }
     };
 

@@ -47,7 +47,8 @@
             "./assets/fonts/Poppins-SemiBold.ttf",
             "./assets/fonts/Poppins-SemiBoldItalic.ttf",
             "./assets/fonts/Poppins-Thin.ttf",
-            "./assets/fonts/Poppins-ThinItalic.ttf"
+            "./assets/fonts/Poppins-ThinItalic.ttf",
+            "./assets/fonts/Merriweather-Medium.ttf"
           ]
         }
       ],

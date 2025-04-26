@@ -2,12 +2,15 @@ import AlertCardList from "@/components/alerts/AlertCardList";
 import {Theme} from "@/constants/theme";
 import {View, Text, StyleSheet, ScrollView, ActivityIndicator, RefreshControl} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
-import {useEffect, useState} from "react";
+import {useState, useCallback} from "react";
+import {useFocusEffect} from "@react-navigation/native";
 import {fetchAlerts} from "@/services/alerts";
 import {useSession} from "@/context/AuthSessionContext";
 import {Alert} from "@/types/alert";
+import { commonStyles } from "@/styles/commonStyles";
 
 export default function Tab() {
+    const [initialLoading, setInitialLoading] = useState(true);
     const [unattendedAlerts, setUnattendedAlerts] = useState<Alert[]>([]);
     const [attendedAlerts, setAttendedAlerts] = useState<Alert[]>([]);
     const [loading, setLoading] = useState(true);
@@ -18,7 +21,7 @@ export default function Tab() {
     const getAlerts = async (isRefresh = false) => {
         if (!session) return; // Only proceed if session is available
 
-        if (!isRefresh) {
+        if (!isRefresh && initialLoading) {
             setLoading(true);
         }
 
@@ -28,6 +31,7 @@ export default function Tab() {
             const {unattendedAlerts, attendedAlerts} = alerts.reduce(
                 (acc, alert) => {
                     if (alert.alert_status === "Unattended") {
+                        console.log("Unattended", alert);
                         acc.unattendedAlerts.push(alert);
                     } else {
                         acc.attendedAlerts.push(alert);
@@ -42,26 +46,33 @@ export default function Tab() {
             setError("Failed to fetch alerts");
         } finally {
             setLoading(false);
+            setInitialLoading(false);
             if (isRefresh) {
                 setIsRefreshing(false);
             }
         }
     };
 
-    useEffect(() => {
-        if (session) {
-            getAlerts(); // Trigger fetch when session is available
-        }
-    }, [session]);
+    useFocusEffect(
+        useCallback(() => {
+          getAlerts(); 
+      
+          const interval = setInterval(() => {
+            getAlerts();
+          }, 5000);
+      
+          return () => clearInterval(interval); // cleanup
+        }, [session])
+      );
 
     const onRefresh = () => {
         setIsRefreshing(true);
         getAlerts(true);
     };
 
-    if (loading && !isRefreshing) {
+    if (initialLoading) {
         return (
-            <SafeAreaView style={styles.background}>
+            <SafeAreaView style={commonStyles.background}>
                 <ActivityIndicator size="large" color={Theme.colors.black}/>
             </SafeAreaView>
         );
@@ -69,7 +80,7 @@ export default function Tab() {
 
     if (error) {
         return (
-            <SafeAreaView style={styles.background}>
+            <SafeAreaView style={commonStyles.background}>
                 <ScrollView
                     refreshControl={
                         <RefreshControl
@@ -80,14 +91,14 @@ export default function Tab() {
                         />
                     }
                 >
-                    <Text style={styles.errorText}>Error: {error}</Text>
+                    <Text style={commonStyles.errorText}>Error: {error}</Text>
                 </ScrollView>
             </SafeAreaView>
         );
     }
 
     return (
-        <SafeAreaView style={styles.background} edges={[]}>
+        <SafeAreaView style={[commonStyles.background, styles.background]} edges={[]}>
             <ScrollView
                 refreshControl={
                     <RefreshControl
@@ -99,15 +110,15 @@ export default function Tab() {
                 }
             >
                 <View style={styles.container}>
-                    <Text style={styles.h1}>Alertas No Atendidas</Text>
+                    <Text style={[commonStyles.h2, styles.marginBottom]}>Alertas sin atender</Text>
                     {unattendedAlerts.length === 0 ? (
-                        <Text style={styles.p}>No se han encontrado alertas</Text>
+                        <Text style={commonStyles.p}>No se han encontrado alertas</Text>
                     ) : (
                         <AlertCardList alerts={unattendedAlerts} unattended />
                     )}
-                    <Text style={[styles.h1, styles.marginTop]}>Alertas Atendidas de Hoy</Text>
+                    <Text style={[commonStyles.h2, styles.marginTop, styles.marginBottom]}>Alertas atendidas de hoy</Text>
                     {attendedAlerts.length === 0 ? (
-                        <Text style={styles.p}>No se han encontrado alertas</Text>
+                        <Text style={commonStyles.p}>No se han encontrado alertas</Text>
                     ) : (
                         <AlertCardList alerts={attendedAlerts} />
                     )}
@@ -121,31 +132,16 @@ const styles = StyleSheet.create({
     background: {
         flex: 1,
         justifyContent: "flex-start",
-        backgroundColor: Theme.colors.whiteBlue,
     },
     container: {
         flex: 1,
         marginHorizontal: Theme.margin.horizontal,
         paddingVertical: Theme.padding.vertical
     },
-    h1: {
-        fontSize: Theme.size.h1,
-        fontFamily: Theme.fonts.semibold,
-        color: Theme.colors.black,
-        marginBottom: Theme.margin.vertical,
-    },
     marginTop: {
         marginTop: Theme.margin.vertical * 2.4,
     },
-    errorText: {
-        color: Theme.colors.red,
-        fontSize: Theme.size.h2,
-        textAlign: "center",
-        marginTop: Theme.margin.vertical,
+    marginBottom: {
+        marginBottom: Theme.margin.vertical,
     },
-    p: {
-        color: Theme.colors.gray,
-        fontSize: Theme.size.h3,
-        fontFamily: Theme.fonts.regular,
-    }
 });

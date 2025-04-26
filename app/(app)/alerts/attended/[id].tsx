@@ -67,7 +67,7 @@ export default function AttendedDetails() {
                     headerBackTitle: "Regresar",
                     headerBackTitleStyle: {
                         fontFamily: Theme.fonts.regular,
-                        fontSize: Theme.size.h3,
+                        fontSize: 20,
                     },
                 }}
             />
@@ -76,7 +76,7 @@ export default function AttendedDetails() {
                     <View style={styles.alertHeader}>
                         <MaterialIcons
                             name="check-circle"
-                            size={Theme.size.xl * 3.8}
+                            size={120}
                             color={Theme.colors.green}
                         />
                         <Text style={styles.h1}>ALERTA RESUELTA</Text>
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     h1: {
         fontFamily: Theme.fonts.medium,
         color: Theme.colors.green,
-        fontSize: Theme.size.xl,
+        fontSize: 32,
     },
     infoContainer: {
         paddingHorizontal: Theme.padding.horizontal,
@@ -169,12 +169,12 @@ const styles = StyleSheet.create({
     },
     infoText: {
         color: Theme.colors.black,
-        fontSize: Theme.size.h3,
+        fontSize: 20,
         fontFamily: Theme.fonts.regular,
     },
     highlight: {
         fontFamily: Theme.fonts.semibold,
-        fontSize: Theme.size.h3,
+        fontSize: 20,
     },
     bulletContainer: {
         marginLeft: Theme.margin.horizontal,
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     },
     errorText: {
         color: Theme.colors.red,
-        fontSize: Theme.size.h3,
+        fontSize: 20,
         textAlign: "center",
     },
 });
