@@ -31,7 +31,6 @@ export default function Tab() {
             const {unattendedAlerts, attendedAlerts} = alerts.reduce(
                 (acc, alert) => {
                     if (alert.alert_status === "Unattended") {
-                        console.log("Unattended", alert);
                         acc.unattendedAlerts.push(alert);
                     } else {
                         acc.attendedAlerts.push(alert);

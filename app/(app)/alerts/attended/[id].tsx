@@ -1,4 +1,4 @@
-import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
+import {ActivityIndicator, StyleSheet, Text, View, Alert as RNAlert} from "react-native";
 import React, {useEffect, useState} from "react";
 import {router, Stack, useLocalSearchParams} from "expo-router";
 import Button from "@/components/ui/Button";
@@ -6,8 +6,8 @@ import {Theme} from "@/constants/theme";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {Platform} from "react-native";
 import {datetimeFormat} from "@/utils/datetimeFormat";
-import {Alert, AlertResponse} from "@/types/alert";
-import {fetchAlert} from "@/services/alerts";
+import {Alert, AlertMarkAttendanceRequest, AlertResponse} from "@/types/alert";
+import {fetchAlert, updateAlert} from "@/services/alerts";
 import {adjustPrecision} from "@/utils/adjustPrecision";
 import {useSession} from "@/context/AuthSessionContext";
 import { commonStyles } from "@/styles/commonStyles";
@@ -17,7 +17,30 @@ export default function AttendedDetails() {
     const [alert, setAlert] = useState<Alert | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const {session} = useSession();
+    const {session, doctorId} = useSession();
+    const handleLiberate = () => {
+        RNAlert.alert(
+            "Confirmar liberación",
+            "¿Deseas liberar la alerta?",
+            [
+                { text: "Cancelar", style: "cancel" },
+                { text: "Liberar", onPress: () => { liberateAlert(); router.back(); } }
+            ]
+        );
+    };
+
+    const liberateAlert = async () => {
+        const alertLiberateRequest: AlertMarkAttendanceRequest = {
+            attended_by_id: null,
+            attended_timestamp: null,
+        };
+
+        try {
+            await updateAlert(id, alertLiberateRequest, session!);
+        } catch (err) {
+            setError("Failed to liberate alert.");
+        }
+    };
 
     useEffect(() => {
         const loadAlert = async () => {
@@ -128,6 +151,9 @@ export default function AttendedDetails() {
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
+                    {doctorId === alert.attended_by.doctor_id && (
+                        <Button onPress={handleLiberate} backgroundColor="warning" text={"LIBERAR"}/>
+                    )}
                     <Button onPress={() => router.back()} text={"ACEPTAR"}/>
                 </View>
             </View>

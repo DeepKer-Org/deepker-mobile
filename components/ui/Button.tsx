@@ -11,19 +11,24 @@ import { Theme } from "@/constants/theme";
 interface ButtonProps {
   onPress: (event: GestureResponderEvent) => void;
   text: string;
-  primary?: boolean;
+  backgroundColor?: "primary" | "warning" | "default";
 }
 
 const Button: React.FC<ButtonProps> = ({
   onPress,
   text,
-  primary,
+  backgroundColor = "default",
 }) => {
-  const backgroundColor = primary ? Theme.colors.green : Theme.colors.blackBlue;
+
+  const buttonBackgroundColor = {
+    primary: Theme.colors.green,
+    warning: Theme.colors.red,
+    default: Theme.colors.blackBlue,
+  }
 
   return (
     <TouchableOpacity onPress={onPress}>
-      <View style={[styles.button, { backgroundColor: backgroundColor }]}>
+      <View style={[styles.button, { backgroundColor: buttonBackgroundColor[backgroundColor] }]}>
         <Text style={styles.text}>{text}</Text>
       </View>
     </TouchableOpacity>

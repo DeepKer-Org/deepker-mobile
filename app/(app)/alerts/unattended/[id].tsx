@@ -132,7 +132,7 @@ export default function UnattendedDetails() {
         <View style={styles.buttonContainer}>
           <Button
             onPress={handleMarkAttendance}
-            primary
+            backgroundColor="primary"
             text={"ATENDER"}
           />
           <Button onPress={() => router.back()} text={"CANCELAR"} />
