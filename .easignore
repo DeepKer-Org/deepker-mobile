@@ -41,8 +41,3 @@ yarn-error.*
 # IDE
 .idea/
 .vscode/
-
-# Firebase
-google-services.json
-
-.env
