@@ -26,13 +26,10 @@ export const loginUser = async (username: string, password: string): Promise<Log
 };
 
 export const changePassword = async (dni: string, issuance_date: string, new_password: string): Promise<void> => {
-    const token = await SecureStore.getItemAsync("token");
-
     const response = await fetch(`${API_BASE_URL}/authorization/change-password`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
             dni,

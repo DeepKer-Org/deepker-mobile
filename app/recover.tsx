@@ -26,7 +26,9 @@ const Recover = () => {
 
     setLoading(true);
     try {
-      const formattedDate = issuanceDate?.toISOString().split("T")[0] || "";
+      const formattedDate = issuanceDate
+  ? `${issuanceDate.getFullYear()}-${String(issuanceDate.getMonth() + 1).padStart(2, "0")}-${String(issuanceDate.getDate()).padStart(2, "0")}`
+  : "";
       await changePassword(dni, formattedDate, password);
       Alert.alert("Éxito", "Contraseña restablecida con éxito.", [
         { text: "Iniciar sesión", onPress: handleLogin },
