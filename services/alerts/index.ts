@@ -5,11 +5,9 @@ import {AlertMarkAttendanceRequest, AlertResponse, AlertsResponse} from "@/types
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || "http://localhost:8080";
 
 export const fetchAlerts = async (token: string): Promise<AlertsResponse> => {
-    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-    // Fetch today alerts
+    // Fetch today alerts (last 24 hours)
     const response = await fetch(
-        `${API_BASE_URL}/alerts?timezone=${encodeURIComponent(timeZone)}`,
+        `${API_BASE_URL}/alerts?period=recent`,
         {
             method: "GET",
             headers: {

@@ -34,13 +34,7 @@ adb -s device_name reverse tcp:8080 tcp:8080
 ## Building the application (Android only supported)
 
 ```bash
-eas build --profile development --platform android  
+eas build --profile preview --platform android  
 ```
 
-Once this is complete, a link will be provided to download the APK file. Open and download the APK on your Android device.
-
-### Start server in production
-
-```bash
-pnpm start
-```
+Once this is complete, a link will be provided to download the APK file. Open and download the APK on your Android device. 
