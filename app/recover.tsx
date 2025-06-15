@@ -22,13 +22,20 @@ const Recover = () => {
   const [issuanceDate, setIssuanceDate] = useState<Date | undefined>(undefined);
   const [loading, setLoading] = useState(false);
   const handleRecover = async () => {
-    if (!validateInputs()) return;
+    if (!validateInputs()) {
+      return;
+    }
 
     setLoading(true);
     try {
       const formattedDate = issuanceDate
-  ? `${issuanceDate.getFullYear()}-${String(issuanceDate.getMonth() + 1).padStart(2, "0")}-${String(issuanceDate.getDate()).padStart(2, "0")}`
-  : "";
+        ? `${issuanceDate.getFullYear()}-${String(
+            issuanceDate.getMonth() + 1
+          ).padStart(2, "0")}-${String(issuanceDate.getDate()).padStart(
+            2,
+            "0"
+          )}`
+        : "";
       await changePassword(dni, formattedDate, password);
       Alert.alert("Éxito", "Contraseña restablecida con éxito.", [
         { text: "Iniciar sesión", onPress: handleLogin },
@@ -41,12 +48,19 @@ const Recover = () => {
   };
 
   const validateInputs = (): boolean => {
-    return (
-      validateDni(dni) &&
-      validateIssuanceDate(issuanceDate) &&
-      validatePassword(password) &&
-      validatePasswordMatch(password, repeatPassword)
-    );
+    if (!validateDni(dni)) {
+      return false;
+    }
+    if (!validateIssuanceDate(issuanceDate)) {
+      return false;
+    }
+    if (!validatePassword(password)) {
+      return false;
+    }
+    if (!validatePasswordMatch(password, repeatPassword)) {
+      return false;
+    }
+    return true;
   };
 
   const handleLogin = () => {
@@ -114,9 +128,9 @@ export default Recover;
 
 const styles = StyleSheet.create({
   container: {
-     flex: 1,
-     justifyContent: "center",
-     paddingHorizontal: Theme.padding.horizontal * 2,
-   },
-   ...commonStyles
- });
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: Theme.padding.horizontal * 2,
+  },
+  ...commonStyles,
+});
